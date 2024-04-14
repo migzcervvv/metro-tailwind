@@ -1,0 +1,96 @@
+.icon {
+  font-size: 1.8rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.icon:hover {
+  color: rgb(96, 96, 245);
+}
+
+.weatherForecast {
+  font-family: "Arial", sans-serif;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 100%;
+  margin: 20px auto;
+}
+
+.forecastDay {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.weatherIcon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.forecastDay:last-child {
+  border-bottom: none;
+}
+
+.forecastDay p {
+  margin: 5px 0;
+}
+
+h2 {
+  color: #333;
+}
+
+.dailyItem {
+  background-color: #f4f7f7;
+  border-radius: 15px;
+  height: 40px;
+  margin: 5px;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: medium;
+  padding: 5px 20px;
+  box-shadow: 2px 1px 2px 1px;
+}
+
+.daily-item .day {
+  cursor: inherit;
+  color: #003405;
+  flex: 1 1;
+  font-weight: 600;
+  margin-left: 15px;
+}
+
+.description {
+  cursor: inherit;
+  flex: 1 1;
+  margin-right: 15px;
+  text-align: right;
+}
+
+.minMax {
+  color: #05900e;
+}
+
+.dailyDetailsGrid {
+  grid-row-gap: 0;
+  grid-column-gap: 15px;
+  -webkit-column-gap: 15px;
+  column-gap: 15px;
+  display: grid;
+  flex: 1 1;
+  grid-template-columns: auto auto;
+  padding: 5px 15px;
+  row-gap: 0;
+}
+
+.dailyDetailsGridItem {
+  align-items: center;
+  gap: 0;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+}
