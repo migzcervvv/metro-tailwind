@@ -97,7 +97,13 @@ export default function AboutPage() {
                         </p>
                       </div>
                       <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                        <BiLogoFacebookCircle className="icon" />
+                        <a
+                          href="https://www.facebook.com/Kesong.pulaa14"
+                          target="_blank"
+                          referrerPolicy="noopener"
+                        >
+                          <BiLogoFacebookCircle className="icon" />
+                        </a>
                       </div>
                     </div>
                   </li>
@@ -121,7 +127,13 @@ export default function AboutPage() {
                         </p>
                       </div>
                       <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                        <BiLogoFacebookCircle className="icon" />
+                        <a
+                          href="https://www.facebook.com/migzcerv7/"
+                          target="_blank"
+                          referrerPolicy="noopener"
+                        >
+                          <BiLogoFacebookCircle className="icon" />
+                        </a>
                       </div>
                     </div>
                   </li>
@@ -145,7 +157,13 @@ export default function AboutPage() {
                         </p>
                       </div>
                       <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                        <BiLogoFacebookCircle className="icon" />
+                        <a
+                          href="https://www.facebook.com/lapidhec"
+                          target="_blank"
+                          referrerPolicy="noopener"
+                        >
+                          <BiLogoFacebookCircle className="icon" />
+                        </a>
                       </div>
                     </div>
                   </li>
@@ -169,7 +187,13 @@ export default function AboutPage() {
                         </p>
                       </div>
                       <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                        <BiLogoFacebookCircle className="icon" />
+                        <a
+                          href="https://www.facebook.com/danemartino"
+                          target="_blank"
+                          referrerPolicy="noopener"
+                        >
+                          <BiLogoFacebookCircle className="icon" />
+                        </a>
                       </div>
                     </div>
                   </li>
@@ -193,7 +217,13 @@ export default function AboutPage() {
                         </p>
                       </div>
                       <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                        <BiLogoFacebookCircle className="icon" />
+                        <a
+                          href="https://www.facebook.com/johnangelo.sumang.04"
+                          target="_blank"
+                          referrerPolicy="noopener"
+                        >
+                          <BiLogoFacebookCircle className="icon" />
+                        </a>
                       </div>
                     </div>
                   </li>
