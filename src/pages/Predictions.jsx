@@ -105,7 +105,7 @@ export default function Predictions() {
                             day: "numeric",
                           })}
                         </label>
-                        <label className="description ">
+                        <label className="description">
                           {day.weather[0].description}
                         </label>
                         <label className="minMax dark:text-slate-100">

@@ -99,4 +99,9 @@ h2 {
   .weather-card {
     max-width: 95%;
   }
+  .minMax,
+  .description,
+  .day {
+    font-size: x-small;
+  }
 }

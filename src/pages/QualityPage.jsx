@@ -2,7 +2,7 @@ import MyFooter from "../components/Footer";
 import { FaSmog, FaWind } from "react-icons/fa";
 import { MdDangerous } from "react-icons/md";
 import { IconContext } from "react-icons";
-import { Table } from "flowbite-react";
+import { Table, Card } from "flowbite-react";
 import {
   TbFilterCheck,
   TbWind,
@@ -41,7 +41,7 @@ export default function QualityPage() {
             when air pollution is dangerous by:
           </h4>
         </div>
-        <div className="flex flex-row justify-center mt-4 gap-4 flex-wrap sm:flex-nowrap">
+        <div className="flex flex-row justify-center mt-4 gap-8 flex-wrap sm:flex-nowrap">
           <div className="flex flex-col items-center">
             <IconContext.Provider value={{ size: 36 }}>
               <FaSmog />
@@ -172,7 +172,7 @@ export default function QualityPage() {
         </Table>
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
           <div className="flex flex-col order-2 lg:order-1 justify-center items-center mx-auto p-4 sm:p-0">
-            <h1 className="text-2xl sm:text-4xl font-bold my-3 sm:my-0">
+            <h1 className="text-2xl sm:text-4xl font-bold my-3 sm:my-4">
               How Does It Work?
             </h1>
             <p className="text-justify sm:text-left">
@@ -191,12 +191,12 @@ export default function QualityPage() {
             <img
               src="/aqi-pic.png"
               alt="How does it work image?"
-              className="max-h-60 max-w-60 lg-max-w-full lg:max-h-full"
+              className="max-h-60 max-w-60 lg:max-w-80 lg:max-h-80"
             />
           </div>
         </div>
-        <div className="flex flex-col max-w-6xl mx-auto p-3 sm:p-0 mt-4">
-          <div className="flex flex-col mx-auto justify-center text-center">
+        <div className="flex flex-col lg:flex-row max-w-6xl mx-auto p-3 sm:p-0 mt-4">
+          <div className="flex flex-col mx-auto justify-center text-center gap-4">
             <h1 className="text-2xl sm:text-4xl font-bold">
               Helpful Solutions
             </h1>
@@ -205,30 +205,56 @@ export default function QualityPage() {
               becomes unfavorable!
             </h2>
           </div>
-          <div className="flex flex-wrap my-4 gap-4 md:gap-8 justify-center lg:justify-evenly">
+          <div className="flex flex-wrap md:grid md:grid-cols-2 my-4 gap-4 md:gap-8 justify-center lg:justify-evenly">
             <div className="flex flex-col items-center justify-center ">
-              <TbAirConditioning fontSize="48px" />
-              <p className="text-justify sm:text-left">
-                Purify your air and make it free from pollution
-              </p>
+              <Card className="max-w-sm" horizontal>
+                <TbAirConditioning fontSize="48px" />
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Purify Your Air!
+                </h5>
+                <p className="text-justify sm:text-left">
+                  Purify your air and make it free from pollution! Purified air
+                  means the air you breathe will be clean. Start from your
+                  house!
+                </p>
+              </Card>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <TbFaceMask fontSize="48px" />
-              <p className="text-justify sm:text-left">
-                Make sure to wear face masks outside your house
-              </p>
+              <Card className="max-w-sm" horizontal>
+                <TbFaceMask fontSize="48px" />
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Wear Face Masks!
+                </h5>
+                <p className="text-justify sm:text-left">
+                  Make sure to wear face masks outside your house to protect
+                  yourself from pollution! Inhaling pollutants can endanger your
+                  life.
+                </p>
+              </Card>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <TbFilterCheck fontSize="48px" />
-              <p className="text-justify sm:text-left">
-                Improve the air quality in your car by utilizing a filter
-              </p>
+              <Card className="max-w-sm" horizontal>
+                <TbFilterCheck fontSize="48px" />
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Utilize Filters!
+                </h5>
+                <p className="text-justify sm:text-left">
+                  Improve the air quality in your car by utilizing a filter. It
+                  stops dirty air from going inside your cars.
+                </p>
+              </Card>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <TbWind fontSize="48px" />
-              <p className="text-justify sm:text-left">
-                Monitor the air quality to make sure it is safe outside
-              </p>
+              <Card className="max-w-sm" horizontal>
+                <TbWind fontSize="48px" />
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Monitor Air Quality!
+                </h5>
+                <p className="text-justify sm:text-left">
+                  Monitor the air quality to make sure it is safe outside. But
+                  never forget the other three solutions!
+                </p>
+              </Card>
             </div>
           </div>
         </div>

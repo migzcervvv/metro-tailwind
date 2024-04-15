@@ -22,7 +22,7 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="flex sm:flex-row flex-col mx-auto">
-          <div className="flex flex-col justify-center sm:w-4/6 order-last sm:order-first">
+          <div className="flex flex-col justify-center sm:w-8/12 order-last sm:order-first">
             <div className="px-3 sm:pl-5 text-2xl sm:text-4xl">
               <h1>Understanding the urgency</h1>
             </div>
@@ -40,6 +40,17 @@ export default function AboutPage() {
                 initiative aims to enhance air quality in Quezon City promoting
                 a healthier environment for all.
               </p>
+              <div className="flex justify-center sm:justify-start my-4">
+                <Button
+                  pill
+                  outline
+                  gradientDuoTone="purpleToBlue"
+                  as={Link}
+                  to="/predictions"
+                >
+                  Check Predictions!
+                </Button>
+              </div>
             </div>
           </div>
           <div className="w-full sm:w-2/6 pr-5 mx-auto order-first sm:order-last flex justify-center">
@@ -47,18 +58,7 @@ export default function AboutPage() {
               src="/manila.jpg"
               className="my-5 sm:my-0 rounded-2xl h-36 w-1/2 sm:h-auto sm:w-auto"
             />
-          </div>
-        </div>
-        <div className="flex justify-center sm:justify-start pt-3 px-3 sm:pl-5">
-          <Button
-            pill
-            outline
-            gradientDuoTone="purpleToBlue"
-            as={Link}
-            to="/predictions"
-          >
-            Check Predictions!
-          </Button>
+          </div>{" "}
         </div>
         <div className="max-w-6xl mx-auto mt-4 flex flex-col sm:flex-row w-3/4">
           <div className="flex justify-center flex-col mx-auto">
