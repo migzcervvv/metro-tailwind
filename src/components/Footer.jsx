@@ -19,7 +19,7 @@ export default function MyFooter() {
           <div className="mb-3 sm:my-0 ">
             <a
               href="/"
-              className="sm:text-2xl self-center whitespace-nowrap text-xl font-semibold dark:text-lime-50"
+              className="sm:text-2xl self-center whitespace-nowrap text-xl font-semibold text-lime-700 hover:text-lime-900 dark:text-lime-500 dark:hover:text-lime-200"
             >
               MetroBreathe
             </a>

@@ -15,7 +15,7 @@ export default function MyNavbar() {
       className="bg-neutral-100 max-w-full mx-auto pt-6 border-b-2 dark:bg-slate-600"
     >
       <Navbar.Brand as={Link} to="/">
-        <span className="sm:text-2xl self-center whitespace-nowrap text-xl font-semibold dark:text-lime-50">
+        <span className="sm:text-2xl self-center whitespace-nowrap text-xl font-semibold text-lime-700 hover:text-lime-900 dark:text-lime-500 dark:hover:text-lime-200">
           MetroBreathe
         </span>
       </Navbar.Brand>

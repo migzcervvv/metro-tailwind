@@ -3,7 +3,7 @@ import React from "react";
 function Highlights({ stats }) {
   return (
     <div className="flex flex-row gap-3 sm:flex-col justify-start items-center ">
-      <h2 className="text-sm mt-2">{stats.title}</h2>
+      <h2 className="text-sm mt-2 dark:text-lime-50">{stats.title}</h2>
       <div className="mt-2">
         {" "}
         <span className="text-lg sm:text-4xl font-bold">{stats.value}</span>

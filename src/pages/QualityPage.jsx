@@ -3,6 +3,12 @@ import { FaSmog, FaWind } from "react-icons/fa";
 import { MdDangerous } from "react-icons/md";
 import { IconContext } from "react-icons";
 import { Table } from "flowbite-react";
+import {
+  TbFilterCheck,
+  TbWind,
+  TbFaceMask,
+  TbAirConditioning,
+} from "react-icons/tb";
 
 function getBackgroundColor(indexValue) {
   if (indexValue >= 0 && indexValue <= 50) {
@@ -67,91 +73,166 @@ export default function QualityPage() {
           </Table.Head>
           <Table.Body className="divide-y">
             <Table.Row>
-              <Table.Cell className="font-medium dark:text-lime-50">
+              <Table.Cell className="font-medium text-lime-900 dark:text-lime-50">
                 Good
               </Table.Cell>
               <Table.Cell
-                className={`dark:text-lime-50 ${getBackgroundColor(0)}`}
+                className={`dark:text-lime-50 text-lime-900 ${getBackgroundColor(
+                  0
+                )}`}
               >
                 0 to 50
               </Table.Cell>
-              <Table.Cell className="dark:text-lime-50">None</Table.Cell>
+              <Table.Cell className="text-lime-900 dark:text-lime-50">
+                None
+              </Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell className="font-medium dark:text-lime-50">
+              <Table.Cell className="font-medium text-lime-950 dark:text-lime-50">
                 Moderate
               </Table.Cell>
               <Table.Cell
-                className={`dark:text-lime-50 ${getBackgroundColor(75)}`}
+                className={`text-lime-950 dark:text-lime-50 ${getBackgroundColor(
+                  75
+                )}`}
               >
                 51 to 100
               </Table.Cell>
-              <Table.Cell className="dark:text-lime-50">
+              <Table.Cell className="text-lime-950 dark:text-lime-50">
                 Usually sensitive individuals should consider limiting prolonged
                 outdoor exertion.
               </Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell className="font-medium dark:text-lime-50">
+              <Table.Cell className="font-medium text-lime-950 dark:text-lime-50">
                 Unhealthy for Sensitive Groups
               </Table.Cell>
               <Table.Cell
-                className={`dark:text-lime-50 ${getBackgroundColor(125)}`}
+                className={`text-lime-950 dark:text-lime-50 ${getBackgroundColor(
+                  125
+                )}`}
               >
                 101 to 150
               </Table.Cell>
-              <Table.Cell className="dark:text-lime-50">
+              <Table.Cell className="text-lime-950 dark:text-lime-50">
                 Children, active adults, and people with respiratory disease,
                 such as asthma, should limit prolonged outdoor exertion.
               </Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell className="font-medium dark:text-lime-50">
+              <Table.Cell className="font-medium text-lime-950 dark:text-lime-50">
                 Unhealthy
               </Table.Cell>
               <Table.Cell
-                className={`dark:text-lime-50 ${getBackgroundColor(175)}`}
+                className={`text-lime-950 dark:text-lime-50 ${getBackgroundColor(
+                  175
+                )}`}
               >
                 151 to 200
               </Table.Cell>
-              <Table.Cell className="dark:text-lime-50">
+              <Table.Cell className="text-lime-950 dark:text-lime-50">
                 Children, active adults, and people with respiratory disease,
                 such as asthma, should avoid outdoor exertion; everyone else
                 should limit prolonged outdoor exertion.
               </Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell className="font-medium dark:text-lime-50">
+              <Table.Cell className="font-medium text-lime-950 dark:text-lime-50">
                 Very Unhealthy
               </Table.Cell>
               <Table.Cell
-                className={`dark:text-lime-50 ${getBackgroundColor(250)}`}
+                className={`text-lime-950 dark:text-lime-50 ${getBackgroundColor(
+                  250
+                )}`}
               >
                 201 to 300
               </Table.Cell>
-              <Table.Cell className="dark:text-lime-50">
+              <Table.Cell className="text-lime-950 dark:text-lime-50">
                 Children, active adults, and people with respiratory disease,
                 such as asthma, should avoid outdoor exertion; everyone else
                 should limit outdoor exertion.
               </Table.Cell>
             </Table.Row>
             <Table.Row>
-              <Table.Cell className="font-medium dark:text-lime-50">
+              <Table.Cell className="font-medium text-lime-950 dark:text-lime-50">
                 Hazardous
               </Table.Cell>
               <Table.Cell
-                className={`dark:text-lime-50 ${getBackgroundColor(400)}`}
+                className={`text-lime-950 dark:text-lime-50 ${getBackgroundColor(
+                  400
+                )}`}
               >
                 301 to 500
               </Table.Cell>
-              <Table.Cell className="dark:text-lime-50">
+              <Table.Cell className="text-lime-950 dark:text-lime-50">
                 Everyone should avoid all physical activity outdoors.
               </Table.Cell>
             </Table.Row>
           </Table.Body>
         </Table>
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
+          <div className="flex flex-col order-2 lg:order-1 justify-center items-center mx-auto p-4 sm:p-0">
+            <h1 className="text-2xl sm:text-4xl font-bold my-3 sm:my-0">
+              How Does It Work?
+            </h1>
+            <p className="text-justify sm:text-left">
+              Daily measurements quantify air pollution levels, utilizing a
+              scale from 0, indicating pristine air, to 500, signifying an
+              imminent threat to public health. The Air Quality Index (AQI)
+              categorizes pollution into six levels, each assigned a name, a
+              corresponding color, and advisory recommendations. AQI values
+              equal to or below 100 are deemed acceptable for nearly everyone.
+              However, when surpassing 100, air quality is classified as
+              unhealthy, with heightened values indicating an elevated risk of
+              health issues for a larger population.
+            </p>
+          </div>
+          <div className="flex flex-col order-1 lg:order-2 justify-center items-center">
+            <img
+              src="/aqi-pic.png"
+              alt="How does it work image?"
+              className="max-h-60 max-w-60 lg-max-w-full lg:max-h-full"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col max-w-6xl mx-auto p-3 sm:p-0 mt-4">
+          <div className="flex flex-col mx-auto justify-center text-center">
+            <h1 className="text-2xl sm:text-4xl font-bold">
+              Helpful Solutions
+            </h1>
+            <h2 className="text-lime-950 dark:text-lime-50 font-medium">
+              Explore these effective solutions to improve air quality when it
+              becomes unfavorable!
+            </h2>
+          </div>
+          <div className="flex flex-wrap my-4 gap-4 md:gap-8 justify-center lg:justify-evenly">
+            <div className="flex flex-col items-center justify-center ">
+              <TbAirConditioning fontSize="48px" />
+              <p className="text-justify sm:text-left">
+                Purify your air and make it free from pollution
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <TbFaceMask fontSize="48px" />
+              <p className="text-justify sm:text-left">
+                Make sure to wear face masks outside your house
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <TbFilterCheck fontSize="48px" />
+              <p className="text-justify sm:text-left">
+                Improve the air quality in your car by utilizing a filter
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center">
+              <TbWind fontSize="48px" />
+              <p className="text-justify sm:text-left">
+                Monitor the air quality to make sure it is safe outside
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-
       <MyFooter />
     </>
   );

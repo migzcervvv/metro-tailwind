@@ -18,7 +18,7 @@ export default function HomePage() {
           outline
           gradientDuoTone="purpleToBlue"
           to="/about"
-          className="w-1/3"
+          className="w-full md:w-1/3"
         >
           Learn More
         </Button>

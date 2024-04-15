@@ -88,6 +88,25 @@ export default function MonitoringPage() {
   return (
     <>
       <div className="min-h-screen flex flex-col justify-start pt-4 items-center">
+        <div className="flex flex-col lg:flex-row max-w-6xl mx-auto min-h-96 mb-4 p-4 sm:p-0">
+          <div className="flex flex-col justify-center max-w-2xl order-2 lg:order-1">
+            <h1 className="py-3 sm:pb-5 text-2xl sm:text-4xl sm:font-bold font-semibold">
+              Importance of Weather
+            </h1>
+            <p className="text-justify sm:text-left">
+              Weather plays a crucial role in detecting smog as it influences
+              the dispersion, concentration, and behavior of pollutants in the
+              atmosphere. Factors like temperature inversions, wind speed, and
+              precipitation affect how pollutants disperse and accumulate,
+              impacting air quality. For instance, during temperature
+              inversions, warm air traps pollutants close to the ground, leading
+              to smog buildup.
+            </p>
+          </div>
+          <div className="flex justify-center order-1 lg:order-2">
+            <img src="/air-importance.png" alt="Air Importance Graphic" />
+          </div>
+        </div>
         <h1 className="self-center py-3 sm:pb-5 text-2xl sm:text-4xl sm:font-bold font-semibold">
           Weather Monitoring
         </h1>
@@ -97,7 +116,7 @@ export default function MonitoringPage() {
             Loading Weather Data...
           </div>
         ) : (
-          <Card className="bg-zinc-300 dark:bg-zinc-700">
+          <Card className="weather-card bg-zinc-300 dark:bg-zinc-700">
             <div className="flex flex-col md:flex-row gap-4 p-5">
               <div className="flex-1">
                 {weatherData && (
@@ -161,7 +180,7 @@ export default function MonitoringPage() {
         <div className="flex flex-col sm:flex-row justify-evenly">
           <div className="flex flex-col w-11/12 sm:w-2/5 pl-3 justify-center">
             {" "}
-            <h3 className="text-green-700 font-bold pt-5 sm:pt-0 text-xl sm:text-3xl mb-3">
+            <h3 className="font-bold pt-5 sm:pt-0 text-xl sm:text-3xl mb-3">
               Pollutants
             </h3>
             <p className="text-justify sm:text-left">

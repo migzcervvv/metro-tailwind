@@ -8,13 +8,20 @@ const ContactForm = () => {
     <>
       <div className="flex flex-col md:flex-row md:justify-between p-4">
         <div className="flex flex-col justify-center p-2 mb-4 md:mb-0 md:w-1/2">
-          <h1 className="text-xl font-bold mb-2">CONTACT US</h1>
-          <p>
-            If you have any questions about us, feel free to ask! We are always
-            happy to help!
-          </p>
+          <img
+            src="/metro.png"
+            alt="metrobreathe hero logo"
+            className="hidden lg:inline"
+          />
         </div>
-        <div className="md:w-1/2">
+        <div className="">
+          <div className="flex flex-col justify-center p-2 mb-4 md:mb-0">
+            <h1 className="text-xl font-bold mb-2">CONTACT US</h1>
+            <p>
+              If you have any questions about us, feel free to ask! We are
+              always happy to help!
+            </p>
+          </div>
           <div className="flex justify-center mb-4">
             <Button gradientMonochrome="info" pill className="w-full">
               <HiMail fontSize="24px" />

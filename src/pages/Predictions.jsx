@@ -72,7 +72,7 @@ export default function Predictions() {
         <div className="w-full flex flex-col sm:flex-row mx-auto justify-evenly">
           <div className="mx-auto p-4 sm:p-0">
             <h1 className="text-2xl sm:text-3xl">Weather Forecasting</h1>
-            <p className="text-md sm:text-lg my-2">
+            <p className="text-md my-2">
               Click the accordions to see more information about the weather!
             </p>
             {loading && (
