@@ -15,7 +15,7 @@ export default function MonitoringPage() {
   const api = import.meta.env.VITE_WEATHER_API_KEY;
 
   useEffect(() => {
-    const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${api}&q=Quezon City&aqi=yes`;
+    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${api}&q=Quezon City&aqi=yes`;
 
     fetch(apiUrl)
       .then((res) => {
