@@ -1,4 +1,5 @@
 import { Button } from "flowbite-react";
+import { Link } from "react-router-dom";
 
 export default function CallToAction() {
   return (
@@ -15,9 +16,8 @@ export default function CallToAction() {
         <Button
           gradientDuoTone="purpleToBlue"
           className="rounded-tl-xl rounded-bl-none"
-          href="/quality"
         >
-          Learn More!
+          <Link to="/quality">Learn More!</Link>
         </Button>
       </div>
       <div className="p-7 flex-1">

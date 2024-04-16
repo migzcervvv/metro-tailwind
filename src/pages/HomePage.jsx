@@ -13,14 +13,12 @@ export default function HomePage() {
           Quality Predictions.
         </h4>
         <Button
-          as={Link}
           pill
           outline
           gradientDuoTone="purpleToBlue"
-          to="/about"
           className="w-full md:w-1/3"
         >
-          Learn More
+          <Link to="/about">Learn More</Link>
         </Button>
       </div>
       <div className="flex min-h-full w-full sm:w-3/6 items-center flex-col mx-auto">

@@ -41,14 +41,8 @@ export default function AboutPage() {
                 a healthier environment for all.
               </p>
               <div className="flex justify-center sm:justify-start my-4">
-                <Button
-                  pill
-                  outline
-                  gradientDuoTone="purpleToBlue"
-                  as={Link}
-                  to="/predictions"
-                >
-                  Check Predictions!
+                <Button pill outline gradientDuoTone="purpleToBlue">
+                  <Link to="/predictions">Check Predictions!</Link>
                 </Button>
               </div>
             </div>
