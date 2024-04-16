@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export default function AboutPage() {
   return (
     <>
-      <div className="min-h-screen mx-auto pt-3">
+      <div className="min-h-screen mx-auto pt-24">
         <div className="h-40">
           <div className="flex justify-center mx-auto">
             <h1 className="text-2xl sm:text-4xl">About Us</h1>

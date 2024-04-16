@@ -31,7 +31,7 @@ function getBackgroundColor(indexValue) {
 export default function QualityPage() {
   return (
     <>
-      <div className="min-h-screen max-w-6xl mx-auto">
+      <div className="min-h-screen max-w-6xl mx-auto pt-20">
         <div className="flex flex-col w-6xl mx-auto justify-center text-center">
           <h1 className="mt-3 sm:mt-5 text-xl sm:text-4xl">
             What is the Air Quality Index?
@@ -175,7 +175,7 @@ export default function QualityPage() {
             <h1 className="text-2xl sm:text-4xl font-bold my-3 sm:my-4">
               How Does It Work?
             </h1>
-            <p className="text-justify sm:text-left">
+            <p className="text-justify sm:text-left p-4 lg:p-0">
               Daily measurements quantify air pollution levels, utilizing a
               scale from 0, indicating pristine air, to 500, signifying an
               imminent threat to public health. The Air Quality Index (AQI)
@@ -205,7 +205,7 @@ export default function QualityPage() {
               becomes unfavorable!
             </h2>
           </div>
-          <div className="flex flex-wrap md:grid md:grid-cols-2 my-4 gap-4 md:gap-8 justify-center lg:justify-evenly">
+          <div className="flex flex-wrap md:grid md:grid-cols-2 my-4 gap-4 md:gap-8 justify-center lg:justify-evenly p-4 lg:p-0">
             <div className="flex flex-col items-center justify-center ">
               <Card className="max-w-sm" horizontal>
                 <TbAirConditioning fontSize="48px" />

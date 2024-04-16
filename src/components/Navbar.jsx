@@ -12,7 +12,7 @@ export default function MyNavbar() {
     <Navbar
       fluid
       rounded
-      className="bg-neutral-100 max-w-full mx-auto pt-6 border-b-2 dark:bg-slate-600"
+      className="bg-neutral-100 w-screen mx-auto pt-6 border-b-2 dark:bg-slate-600 fixed z-20"
     >
       <Navbar.Brand as={Link} to="/">
         <span className="sm:text-2xl self-center whitespace-nowrap text-xl font-semibold text-lime-700 hover:text-lime-900 dark:text-lime-500 dark:hover:text-lime-200">

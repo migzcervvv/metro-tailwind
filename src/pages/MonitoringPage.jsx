@@ -87,7 +87,7 @@ export default function MonitoringPage() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col justify-start pt-4 items-center">
+      <div className="min-h-screen flex flex-col justify-start pt-20 items-center">
         <div className="flex flex-col lg:flex-row max-w-6xl mx-auto min-h-96 mb-4 p-4 sm:p-0">
           <div className="flex flex-col justify-center max-w-2xl order-2 lg:order-1">
             <h1 className="py-3 sm:pb-5 text-2xl sm:text-4xl sm:font-bold font-semibold">

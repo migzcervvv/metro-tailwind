@@ -3,12 +3,16 @@ import MyFooter from "../components/Footer";
 import CallToAction from "../components/CallToAction";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Spinner } from "flowbite-react";
+import { Spinner, Card, Progress, Popover, Button } from "flowbite-react";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function Predictions() {
   const [forecast, setForecast] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null); // Adjusted to null for no initially active item
   const [loading, setLoading] = useState(false);
+  const value = 66;
+  const color = "dark";
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -50,7 +54,7 @@ export default function Predictions() {
   return (
     <>
       <div className="min-h-screen">
-        <div className="flex flex-col gap-6 sm:p-28 p-12 px-3 max-w-6xl mx-auto">
+        <div className="flex flex-col gap-6 pt-24 sm:p-28 px-3 max-w-6xl mx-auto">
           <h1 className="text-2xl font-bold lg:text-5xl ">What is smog?</h1>
           <p className="text-sm sm:text-md text-justify sm:text-left">
             Smog is a type of air pollution that occurs when pollutants, such as
@@ -69,12 +73,17 @@ export default function Predictions() {
           </Link>
         </div>
 
-        <div className="w-full flex flex-col sm:flex-row mx-auto justify-evenly">
+        <div className="w-full flex flex-col sm:flex-row mx-auto justify-evenly p-4 md:p-8 lg:p-0">
           <div className="mx-auto p-4 sm:p-0">
             <h1 className="text-2xl sm:text-3xl">Weather Forecasting</h1>
-            <p className="text-md my-2">
-              Click the accordions to see more information about the weather!
-            </p>
+            <div className="py-2">
+              <i className="text-center text-sm md:text-md lg:text-lg">
+                <small>
+                  Click the accordions to see more information about the
+                  weather!
+                </small>
+              </i>
+            </div>
             {loading && (
               <div className="flex justify-center items-center h-2xl">
                 <Spinner size="xl" />
@@ -150,6 +159,290 @@ export default function Predictions() {
               className="sm:inline sm:w-96 sm:h-96 hidden"
             />
           </div>
+        </div>
+        <div className="p-4">
+          <Card className="max-w-full border-teal-500 dark:border-teal-100 border-double border-2">
+            <h1 className="text-center font-bold text-xl sm:text-2xl">
+              Smog and Air Quality Forecasting
+            </h1>
+            <i className="text-center text-sm md:text-md lg:text-lg">
+              <small>Click or hover the buttons for more information!</small>
+            </i>
+            <Progress
+              progress={50}
+              color={`${color}`}
+              textLabel="Smog Meter"
+              textLabelPosition="outside"
+              size="lg"
+              labelProgress
+              labelText
+            />
+
+            <div className="flex flex-wrap justify-center gap-4">
+              <Card className="max-w-sm">
+                <div className="max-w-32 max-h-32">
+                  <CircularProgressbar
+                    value={value}
+                    maxValue={500}
+                    text={`${value}%`}
+                  />
+                </div>{" "}
+                <Popover
+                  trigger="hover"
+                  aria-labelledby="default-popover"
+                  placement="top"
+                  content={
+                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                        <h3
+                          id="default-popover"
+                          className="font-semibold text-gray-900 dark:text-white"
+                        >
+                          Particulate Matter 10
+                        </h3>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p>
+                          PM10 is particulate matter that is 10 microns (μm) or
+                          less in diameter. It is a mixture of materials that
+                          can include soot, metals, salt, and dust.
+                        </p>
+                      </div>
+                    </div>
+                  }
+                >
+                  <Button>PM 10</Button>
+                </Popover>
+              </Card>
+
+              <Card className="max-w-sm">
+                <div className="max-w-32 max-h-32">
+                  <CircularProgressbar
+                    value={value}
+                    maxValue={500}
+                    text={`${value}%`}
+                  />
+                </div>{" "}
+                <Popover
+                  trigger="hover"
+                  placement="top"
+                  aria-labelledby="default-popover"
+                  content={
+                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                        <h3
+                          id="default-popover"
+                          className="font-semibold text-gray-900 dark:text-white"
+                        >
+                          Particulate Matter 2.5
+                        </h3>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p>
+                          The term fine particles, or particulate matter 2.5
+                          (PM2.5), refers to tiny particles or droplets in the
+                          air that are 2 ½ microns or less in width. The largest
+                          PM2.5 particles are about 30-times smaller than a
+                          human hair.
+                        </p>
+                      </div>
+                    </div>
+                  }
+                >
+                  <Button>PM 2.5</Button>
+                </Popover>
+              </Card>
+
+              <Card className="max-w-sm">
+                <div className="max-w-32 max-h-32">
+                  <CircularProgressbar
+                    value={value}
+                    maxValue={500}
+                    text={`${value}%`}
+                  />
+                </div>{" "}
+                <Popover
+                  trigger="hover"
+                  placement="top"
+                  aria-labelledby="default-popover"
+                  content={
+                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                        <h3
+                          id="default-popover"
+                          className="font-semibold text-gray-900 dark:text-white"
+                        >
+                          Carbon Monoxide
+                        </h3>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p>
+                          Carbon monoxide (CO) is an odorless, colorless gas
+                          formed by the incomplete combustion of fuels. When
+                          people are exposed to CO gas, the CO molecules will
+                          displace the oxygen in their bodies and lead to
+                          poisoning.
+                        </p>
+                      </div>
+                    </div>
+                  }
+                >
+                  <Button>CO</Button>
+                </Popover>
+              </Card>
+
+              <Card className="max-w-sm">
+                <div className="max-w-32 max-h-32">
+                  <CircularProgressbar
+                    value={value}
+                    maxValue={500}
+                    text={`${value}%`}
+                  />
+                </div>{" "}
+                <Popover
+                  trigger="hover"
+                  placement="top"
+                  aria-labelledby="default-popover"
+                  content={
+                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                        <h3
+                          id="default-popover"
+                          className="font-semibold text-gray-900 dark:text-white"
+                        >
+                          Nitrogen Dioxide
+                        </h3>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p>
+                          Nitrogen dioxide, or NO2, is a gaseous air pollutant
+                          that forms when fossil fuels such as coal, oil,
+                          methane gas (natural gas) or diesel are burned at high
+                          temperatures.
+                        </p>
+                      </div>
+                    </div>
+                  }
+                >
+                  <Button>NO₂</Button>
+                </Popover>
+              </Card>
+
+              <Card className="max-w-sm">
+                <div className="max-w-32 max-h-32">
+                  <CircularProgressbar
+                    value={value}
+                    maxValue={500}
+                    text={`${value}%`}
+                  />
+                </div>{" "}
+                <Popover
+                  trigger="hover"
+                  placement="top"
+                  aria-labelledby="default-popover"
+                  content={
+                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                        <h3
+                          id="default-popover"
+                          className="font-semibold text-gray-900 dark:text-white"
+                        >
+                          Volatile Organic Compounds
+                        </h3>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p>
+                          Volatile organic compounds (VOCs) are emitted as gases
+                          from certain solids or liquids. VOCs include a variety
+                          of chemicals, some of which may have short- and
+                          long-term adverse health effects.
+                        </p>
+                      </div>
+                    </div>
+                  }
+                >
+                  <Button>VOCs</Button>
+                </Popover>
+              </Card>
+
+              <Card className="max-w-sm">
+                <div className="max-w-32 max-h-32">
+                  <CircularProgressbar
+                    value={value}
+                    maxValue={500}
+                    text={`${value}%`}
+                  />
+                </div>{" "}
+                <Popover
+                  trigger="hover"
+                  placement="top"
+                  aria-labelledby="default-popover"
+                  content={
+                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                        <h3
+                          id="default-popover"
+                          className="font-semibold text-gray-900 dark:text-white"
+                        >
+                          Ozone
+                        </h3>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p>
+                          Ozone (O3) is a gas created by a chemical reaction
+                          between oxides of nitrogen (NOx) and volatile organic
+                          compounds (VOCs). Motor vehicle exhaust and industrial
+                          emissions, gasoline vapors, and chemical solvents as
+                          well as natural sources emit NOx and VOCs that help
+                          form ozone.
+                        </p>
+                      </div>
+                    </div>
+                  }
+                >
+                  <Button>O₃</Button>
+                </Popover>
+              </Card>
+
+              <Card className="max-w-sm">
+                <div className="max-w-32 max-h-32">
+                  <CircularProgressbar
+                    value={value}
+                    maxValue={500}
+                    text={`${value}%`}
+                  />
+                </div>{" "}
+                <Popover
+                  trigger="hover"
+                  placement="top"
+                  aria-labelledby="default-popover"
+                  content={
+                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                        <h3
+                          id="default-popover"
+                          className="font-semibold text-gray-900 dark:text-white"
+                        >
+                          Sulfur Dioxide
+                        </h3>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p>
+                          Sulfur dioxide (SO2) is a colorless, reactive air
+                          pollutant with a strong odor. This gas can be a threat
+                          to human health, animal health, and plant life. The
+                          main sources of sulfur dioxide emissions are from
+                          fossil fuel combustion and natural volcanic activity
+                        </p>
+                      </div>
+                    </div>
+                  }
+                >
+                  <Button>SO₂</Button>
+                </Popover>
+              </Card>
+            </div>
+          </Card>
         </div>
       </div>
       <CallToAction />

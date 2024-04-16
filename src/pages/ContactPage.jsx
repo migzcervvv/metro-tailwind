@@ -66,7 +66,7 @@ const ContactForm = () => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:justify-between pt-0 p-4 md:p-4">
+      <div className="flex flex-col justify-center lg:flex-row lg:justify-between pt-16 p-4 md:pt-20">
         <div className="flex flex-col justify-center p-2 mb-4 md:mb-0 md:w-1/2">
           <img
             src="/metro.png"
