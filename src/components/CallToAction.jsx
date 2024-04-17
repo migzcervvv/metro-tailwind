@@ -13,12 +13,14 @@ export default function CallToAction() {
           essential strategies to protect yourself and your loved ones. Take
           charge of your health by delving into AQI today!
         </p>
-        <Button
-          gradientDuoTone="purpleToBlue"
-          className="rounded-tl-xl rounded-bl-none"
-        >
-          <Link to="/quality">Learn More!</Link>
-        </Button>
+        <Link to="/quality">
+          <Button
+            gradientDuoTone="purpleToBlue"
+            className="rounded-tl-xl rounded-bl-none w-full"
+          >
+            Learn More!
+          </Button>
+        </Link>
       </div>
       <div className="p-7 flex-1">
         <img src="/clean-city.jpg" alt="CTA image" className="rounded-xl" />

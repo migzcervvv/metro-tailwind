@@ -178,7 +178,7 @@ export default function Predictions() {
               labelText
             />
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap md:grid md:grid-cols-4 justify-center gap-4">
               <Card className="max-w-sm">
                 <div className="max-w-32 max-h-32">
                   <CircularProgressbar

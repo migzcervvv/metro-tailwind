@@ -12,14 +12,16 @@ export default function HomePage() {
           Empowering Metro Manila with Smog-Free Tomorrows through Advanced Air
           Quality Predictions.
         </h4>
-        <Button
-          pill
-          outline
-          gradientDuoTone="purpleToBlue"
-          className="w-full md:w-1/3"
-        >
-          <Link to="/about">Learn More</Link>
-        </Button>
+        <Link to="/about">
+          <Button
+            pill
+            outline
+            gradientDuoTone="purpleToBlue"
+            className="w-full md:w-1/3"
+          >
+            Learn More
+          </Button>
+        </Link>
       </div>
       <div className="flex min-h-full w-full sm:w-3/6 items-center flex-col mx-auto">
         <img src="metro.png" className="h-72 w-72 sm:h-auto sm:w-auto" />
