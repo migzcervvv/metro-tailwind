@@ -33,7 +33,7 @@ export default function MyNavbar() {
           to="/predictions"
           className="text-lime-950 dark:text-lime-50"
         >
-          Predictions
+          Forecast
         </Navbar.Link>
         <Navbar.Link
           as={Link}
@@ -56,7 +56,7 @@ export default function MyNavbar() {
         >
           Contact
         </Navbar.Link>
-        <div>
+        <div className="md:pr-4">
           <Button
             className="w-12 h-10 mt-3 sm:mt-0"
             color="gray"

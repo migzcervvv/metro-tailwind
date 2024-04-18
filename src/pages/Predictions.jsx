@@ -178,8 +178,8 @@ export default function Predictions() {
               labelText
             />
 
-            <div className="flex flex-wrap md:grid md:grid-cols-4 justify-center gap-4">
-              <Card className="max-w-sm">
+            <div className="flex flex-wrap sm:grid sm:grid-cols-2 md:grid-cols-4 justify-center gap-4">
+              <Card className="max-w-sm flex items-center">
                 <div className="max-w-32 max-h-32">
                   <CircularProgressbar
                     value={value}
@@ -211,11 +211,11 @@ export default function Predictions() {
                     </div>
                   }
                 >
-                  <Button>PM 10</Button>
+                  <Button className="w-full">PM 10</Button>
                 </Popover>
               </Card>
 
-              <Card className="max-w-sm">
+              <Card className="max-w-sm flex items-center">
                 <div className="max-w-32 max-h-32">
                   <CircularProgressbar
                     value={value}
@@ -253,7 +253,7 @@ export default function Predictions() {
                 </Popover>
               </Card>
 
-              <Card className="max-w-sm">
+              <Card className="max-w-sm flex items-center">
                 <div className="max-w-32 max-h-32">
                   <CircularProgressbar
                     value={value}
@@ -291,7 +291,7 @@ export default function Predictions() {
                 </Popover>
               </Card>
 
-              <Card className="max-w-sm">
+              <Card className="max-w-sm flex items-center">
                 <div className="max-w-32 max-h-32">
                   <CircularProgressbar
                     value={value}
@@ -328,7 +328,7 @@ export default function Predictions() {
                 </Popover>
               </Card>
 
-              <Card className="max-w-sm">
+              <Card className="max-w-sm flex items-center">
                 <div className="max-w-32 max-h-32">
                   <CircularProgressbar
                     value={value}
@@ -365,7 +365,7 @@ export default function Predictions() {
                 </Popover>
               </Card>
 
-              <Card className="max-w-sm">
+              <Card className="max-w-sm flex items-center">
                 <div className="max-w-32 max-h-32">
                   <CircularProgressbar
                     value={value}
@@ -404,7 +404,7 @@ export default function Predictions() {
                 </Popover>
               </Card>
 
-              <Card className="max-w-sm">
+              <Card className="max-w-sm flex items-center">
                 <div className="max-w-32 max-h-32">
                   <CircularProgressbar
                     value={value}

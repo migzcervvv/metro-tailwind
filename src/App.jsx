@@ -8,6 +8,7 @@ import Predictions from "./pages/Predictions";
 import MonitoringPage from "./pages/MonitoringPage";
 import QualityPage from "./pages/QualityPage";
 import ContactPage from "./pages/ContactPage";
+import MyComponent from "./pages/MyComponent";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/monitoring" element={<MonitoringPage />}></Route>
         <Route path="/quality" element={<QualityPage />}></Route>
         <Route path="/contact" element={<ContactPage />}></Route>
+        <Route path="/test" element={<MyComponent />}></Route>
       </Routes>
     </BrowserRouter>
   );
