@@ -4,8 +4,9 @@ import Highlights from "../components/Highlights";
 import MyFooter from "../components/Footer";
 import CallToAction from "../components/CallToAction";
 import { Card, Spinner } from "flowbite-react";
-import axios from "axios";
 import { Table } from "flowbite-react";
+import { collection, getDocs } from "firebase/firestore";
+import { database } from "../../firebaseConfig";
 
 export default function MonitoringPage() {
   const [city, setCity] = useState("La Lloma, Quezon City");
@@ -37,44 +38,36 @@ export default function MonitoringPage() {
   }, [city]);
 
   useEffect(() => {
-    setLoading(true); // Start loading
-    axios
-      .get("https://Metro.pythonanywhere.com/progress-data")
-      .then((response) => {
-        const fetchedData = response.data;
-        const pollutants = [
-          { name: "PM 10", value: fetchedData.matterten },
-          { name: "PM 2.5", value: fetchedData.mattertwo },
-          { name: "CO", value: fetchedData.carbon },
-          { name: "NO₂", value: fetchedData.nitrogen },
-          { name: "VOCs", value: fetchedData.vocs },
-          { name: "O₃", value: fetchedData.ozone },
-          { name: "SO₂", value: fetchedData.sulfur },
-        ];
+    const fetchData = async () => {
+      try {
+        const value = collection(database, "parameters");
+        const querySnapshot = await getDocs(value);
+        const newData = querySnapshot.docs
+          .map((doc) => ({
+            ...doc.data(),
+          }))
+          .map((item) => [
+            { name: "Carbon", aqi: item.carbon },
+            { name: "Nitrogen", aqi: item.nitrogen },
+            { name: "Ozone", aqi: item.ozone },
+            { name: "PM10", aqi: item.pmTen },
+            { name: "PM2.5", aqi: item.pmTwo },
+            { name: "Sulfur", aqi: item.sulfur },
+            { name: "VOCs", aqi: item.vocs },
+          ])
+          .flat();
 
-        const updatedPollutants = pollutants.map((pollutant) => {
-          const aqi = pollutant.value;
-          let level;
-          if (aqi >= 0 && aqi <= 50) level = "Good";
-          else if (aqi <= 100) level = "Moderate";
-          else if (aqi <= 150) level = "Unhealthy for Sensitive Groups";
-          else if (aqi <= 200) level = "Unhealthy";
-          else if (aqi <= 300) level = "Very Unhealthy";
-          else level = "Hazardous";
-          return { ...pollutant, level };
-        });
+        setPollutantsData(newData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
 
-        setPollutantsData(updatedPollutants);
-      })
-      .catch((error) => {
-        console.error("There was an error!", error);
-      })
-      .finally(() => {
-        setLoading(false); // Finish loading regardless of result
-      });
+    fetchData();
   }, []);
 
-  // Function to determine AQI color based on AQI value
   const getAqiColor = (aqi) => {
     if (aqi >= 0 && aqi <= 50) return "#00e400"; // Good (0-50)
     if (aqi <= 100) return "#ffff00"; // Moderate (51-100)
@@ -83,6 +76,15 @@ export default function MonitoringPage() {
     if (aqi <= 300) return "#8f3f97"; // Very Unhealthy (201-300)
     if (aqi <= 500) return "#7e0023"; // Hazardous (301-500)
     return "#ffffff"; // Default color
+  };
+
+  const getAqiLevel = (aqi) => {
+    if (aqi >= 0 && aqi <= 50) return "Good";
+    if (aqi <= 100) return "Moderate";
+    if (aqi <= 150) return "Unhealthy for Sensitive Groups";
+    if (aqi <= 200) return "Unhealthy";
+    if (aqi <= 300) return "Very Unhealthy";
+    return "Hazardous";
   };
 
   return (
@@ -231,16 +233,15 @@ export default function MonitoringPage() {
                           {pollutant.name}
                         </Table.Cell>
                         <Table.Cell
-                          className="text-lime-950 dark:text-lime-50 font-mono"
                           style={{
-                            backgroundColor: getAqiColor(pollutant.value),
-                            fontWeight: "600",
+                            backgroundColor: getAqiColor(pollutant.aqi),
+                            color: pollutant.aqi > 200 ? "white" : "black",
                           }}
                         >
-                          {pollutant.value} AQI
+                          {pollutant.aqi} AQI
                         </Table.Cell>
                         <Table.Cell className="text-lime-950 dark:text-lime-50">
-                          {pollutant.level}
+                          {getAqiLevel(pollutant.aqi)}
                         </Table.Cell>
                       </Table.Row>
                     ))}
