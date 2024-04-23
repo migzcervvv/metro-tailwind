@@ -11,7 +11,7 @@ export default function Predictions() {
   const [forecast, setForecast] = useState([]);
   const [activeIndex, setActiveIndex] = useState(null); // Adjusted to null for no initially active item
   const [loading, setLoading] = useState(false);
-  const value = 66;
+  const value = 140;
   const color = "dark";
 
   useEffect(() => {
@@ -168,14 +168,16 @@ export default function Predictions() {
             <i className="text-center text-sm md:text-md lg:text-lg">
               <small>Click or hover the buttons for more information!</small>
             </i>
+
             <Progress
-              progress={50}
+              progress={33}
               color={`${color}`}
               textLabel="Smog Meter"
               textLabelPosition="outside"
+              progressLabelPosition="outside"
               size="lg"
-              labelProgress
               labelText
+              labelProgress
             />
 
             <div className="flex flex-wrap sm:grid sm:grid-cols-2 md:grid-cols-4 justify-center gap-4">

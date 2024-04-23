@@ -13,6 +13,8 @@ export default function MonitoringPage() {
   const [weatherData, setWeatherData] = useState(null);
   const [pollutantsData, setPollutantsData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [highestPollutant, setHighestPollutant] = useState(null);
+
   const api = import.meta.env.VITE_WEATHER_API_KEY;
 
   useEffect(() => {
@@ -28,7 +30,6 @@ export default function MonitoringPage() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
         setWeatherData(data);
         setLoading(false);
       })
@@ -57,6 +58,17 @@ export default function MonitoringPage() {
           ])
           .flat();
 
+        // Find the highest pollutant based on AQI value
+        const highestPollutant = newData.reduce(
+          (maxPollutant, currentPollutant) => {
+            return currentPollutant.aqi > maxPollutant.aqi
+              ? currentPollutant
+              : maxPollutant;
+          },
+          { name: "", aqi: -Infinity } // Initialize maxPollutant with lowest value
+        );
+
+        setHighestPollutant(highestPollutant);
         setPollutantsData(newData);
         setLoading(false);
       } catch (error) {
@@ -190,23 +202,12 @@ export default function MonitoringPage() {
               are Carbon Monoxide (CO), Nitrogen Dioxide (NO₂), Volatile organic
               compounds (VOCs), Ozone (O₃), Particulate Matter (PM 10, PM 2.5),
               and Sulfur Dioxide (SO₂). The device is located in La Loma Police
-              Station in Quezon City. The current highest pollutant is{" "}
-              {pollutantsData.length > 0
-                ? pollutantsData.reduce((maxPollutant, currentPollutant) =>
-                    currentPollutant.value > maxPollutant.value
-                      ? currentPollutant
-                      : maxPollutant
-                  ).name
-                : "Unknown"}{" "}
-              with an AQI of{" "}
-              {pollutantsData.length > 0
-                ? pollutantsData.reduce((maxPollutant, currentPollutant) =>
-                    currentPollutant.value > maxPollutant.value
-                      ? currentPollutant
-                      : maxPollutant
-                  ).value
-                : "Unknown"}
-              .
+              Station in Quezon City. The current highest pollutant is&nbsp;
+              {!loading && highestPollutant && (
+                <span>
+                  {highestPollutant.name} with an AQI of {highestPollutant.aqi}.
+                </span>
+              )}
             </p>
           </div>
           {loading ? (
