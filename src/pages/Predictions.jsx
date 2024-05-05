@@ -312,43 +312,6 @@ export default function Predictions() {
                           id="default-popover"
                           className="font-semibold text-gray-900 dark:text-white"
                         >
-                          Nitrogen Dioxide
-                        </h3>
-                      </div>
-                      <div className="px-3 py-2">
-                        <p>
-                          Nitrogen dioxide, or NO2, is a gaseous air pollutant
-                          that forms when fossil fuels such as coal, oil,
-                          methane gas (natural gas) or diesel are burned at high
-                          temperatures.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                >
-                  <Button>NO₂</Button>
-                </Popover>
-              </Card>
-
-              <Card className="max-w-sm flex items-center">
-                <div className="max-w-32 max-h-32">
-                  <CircularProgressbar
-                    value={value}
-                    maxValue={500}
-                    text={`${value}%`}
-                  />
-                </div>{" "}
-                <Popover
-                  trigger="hover"
-                  placement="top"
-                  aria-labelledby="default-popover"
-                  content={
-                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                        <h3
-                          id="default-popover"
-                          className="font-semibold text-gray-900 dark:text-white"
-                        >
                           Volatile Organic Compounds
                         </h3>
                       </div>
@@ -403,44 +366,6 @@ export default function Predictions() {
                   }
                 >
                   <Button>O₃</Button>
-                </Popover>
-              </Card>
-
-              <Card className="max-w-sm flex items-center">
-                <div className="max-w-32 max-h-32">
-                  <CircularProgressbar
-                    value={value}
-                    maxValue={500}
-                    text={`${value}%`}
-                  />
-                </div>{" "}
-                <Popover
-                  trigger="hover"
-                  placement="top"
-                  aria-labelledby="default-popover"
-                  content={
-                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                        <h3
-                          id="default-popover"
-                          className="font-semibold text-gray-900 dark:text-white"
-                        >
-                          Sulfur Dioxide
-                        </h3>
-                      </div>
-                      <div className="px-3 py-2">
-                        <p>
-                          Sulfur dioxide (SO2) is a colorless, reactive air
-                          pollutant with a strong odor. This gas can be a threat
-                          to human health, animal health, and plant life. The
-                          main sources of sulfur dioxide emissions are from
-                          fossil fuel combustion and natural volcanic activity
-                        </p>
-                      </div>
-                    </div>
-                  }
-                >
-                  <Button>SO₂</Button>
                 </Popover>
               </Card>
             </div>

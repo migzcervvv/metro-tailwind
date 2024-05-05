@@ -199,13 +199,15 @@ export default function MonitoringPage() {
             </h3>
             <p className="text-justify sm:text-left">
               The current Pollutants monitored by MetroBreathe along Quezon City
-              are Carbon Monoxide (CO), Nitrogen Dioxide (NO₂), Volatile organic
-              compounds (VOCs), Ozone (O₃), Particulate Matter (PM 10, PM 2.5),
-              and Sulfur Dioxide (SO₂). The device is located in La Loma Police
-              Station in Quezon City. The current highest pollutant is&nbsp;
+              are Carbon Monoxide (CO), Volatile organic compounds (VOCs), Ozone
+              (O₃), and Particulate Matter (PM 10, PM 2.5). These parameters are
+              measured by ppm or parts per million. It is a unit used to
+              describe very small concentrations of a substance in a larger
+              solution. The current highest pollutant is&nbsp;
               {!loading && highestPollutant && (
                 <span>
-                  {highestPollutant.name} with an AQI of {highestPollutant.aqi}.
+                  {highestPollutant.name} with a measurement of{" "}
+                  {highestPollutant.aqi} ppm.
                 </span>
               )}
             </p>
@@ -239,7 +241,7 @@ export default function MonitoringPage() {
                             color: pollutant.aqi > 200 ? "white" : "black",
                           }}
                         >
-                          {pollutant.aqi} AQI
+                          {pollutant.aqi} ppm
                         </Table.Cell>
                         <Table.Cell className="text-lime-950 dark:text-lime-50">
                           {getAqiLevel(pollutant.aqi)}
