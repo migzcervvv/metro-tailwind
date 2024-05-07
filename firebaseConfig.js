@@ -1,14 +1,36 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getDatabase, ref, onValue } from "firebase/database"; // Import ref and onValue functions
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
-  authDomain: "fir-b046e.firebaseapp.com",
-  projectId: "fir-b046e",
-  storageBucket: "fir-b046e.appspot.com",
-  messagingSenderId: "295166923409",
-  appId: "1:295166923409:web:a7784668328c1741bd2530",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: "metrobreathe-test.firebaseapp.com",
+  databaseURL:
+    "https://metrobreathe-test-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "metrobreathe-test",
+  storageBucket: "metrobreathe-test.appspot.com",
+  messagingSenderId: "330716473738",
+  appId: "1:330716473738:web:dd3beec4f1d66b55010073",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-export const database = getFirestore(firebaseApp);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// Function to fetch data from Firebase Realtime Database
+export const fetchDataFromFirebase = () => {
+  const rootRef = ref(database, "/"); // The actual path in database
+  return new Promise((resolve, reject) => {
+    onValue(
+      rootRef,
+      (snapshot) => {
+        const data = snapshot.val();
+        resolve(data);
+      },
+      (error) => {
+        reject(error);
+      }
+    );
+  });
+};

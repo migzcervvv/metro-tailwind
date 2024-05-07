@@ -5,9 +5,10 @@ import AboutPage from "./pages/AboutPage";
 import ScrollToTop from "./components/ScrollToTop";
 import MyNavbar from "./components/Navbar";
 import Predictions from "./pages/Predictions";
-import MonitoringPage from "./pages/MonitoringPage";
+//import MonitoringPage from "./pages/MonitoringPage";
 import QualityPage from "./pages/QualityPage";
 import ContactPage from "./pages/ContactPage";
+import SampleComponent from "./components/Test";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/about" element={<AboutPage />}></Route>
         <Route path="/predictions" element={<Predictions />}></Route>
-        <Route path="/monitoring" element={<MonitoringPage />}></Route>
+        {/* <Route path="/monitoring" element={<MonitoringPage />}></Route>*/}
+        <Route path="/test" element={<SampleComponent />}></Route>
         <Route path="/quality" element={<QualityPage />}></Route>
         <Route path="/contact" element={<ContactPage />}></Route>
       </Routes>
