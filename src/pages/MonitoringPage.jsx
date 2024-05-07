@@ -5,8 +5,8 @@ import MyFooter from "../components/Footer";
 import CallToAction from "../components/CallToAction";
 import { Card, Spinner } from "flowbite-react";
 import { Table } from "flowbite-react";
-import { collection, getDocs } from "firebase/firestore";
-import { database } from "../../firebaseConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFirebaseData } from "../redux/store";
 
 export default function MonitoringPage() {
   const [city, setCity] = useState("La Lloma, Quezon City");
@@ -16,6 +16,13 @@ export default function MonitoringPage() {
   const [highestPollutant, setHighestPollutant] = useState(null);
 
   const api = import.meta.env.VITE_WEATHER_API_KEY;
+
+  const dispatch = useDispatch();
+  const { data, error } = useSelector((state) => state.data); // Destructure data and error from the state
+
+  useEffect(() => {
+    dispatch(fetchFirebaseData());
+  }, [dispatch]);
 
   useEffect(() => {
     const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${api}&q=Quezon City&aqi=yes`;
