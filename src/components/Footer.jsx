@@ -1,9 +1,32 @@
-import { Footer } from "flowbite-react";
+import { Footer, Modal } from "flowbite-react";
 import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import PDFViewerPage from "./Pdfview";
+import PDFViewer from "./Pdfview";
+import { useState } from "react";
 
 export default function MyFooter() {
+  const [pdfUrl, setPdfUrl] = useState(""); // State to store the PDF URL
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal open/close
+
+  const handlePdfLinkClick = (type) => {
+    console.log("Link clicked:", type); // Check if the function is being called
+    // Based on the link clicked, set the PDF URL and open the modal
+    if (type === "privacy") {
+      setPdfUrl("/policy.pdf"); // PDF URL for privacy policy
+    } else if (type === "terms") {
+      setPdfUrl("/terms.pdf"); // PDF URL for terms and conditions
+    }
+    setIsModalOpen(true); // Open modal after setting PDF URL
+  };
+
+  const closeModal = () => {
+    console.log("Closing modal");
+    setPdfUrl("");
+    setIsModalOpen(false); // Close modal by setting isModalOpen to false
+  };
+
+  console.log("isModalOpen:", isModalOpen); // Debugging: Check if modal state is updated
+
   return (
     <Footer
       container
@@ -26,7 +49,7 @@ export default function MyFooter() {
                 <Footer.Link as={Link} to="/about">
                   About Us
                 </Footer.Link>
-                <Footer.Link as={Link} to="/">
+                <Footer.Link as={Link} to="/quality">
                   What is AQI?
                 </Footer.Link>
               </Footer.LinkGroup>
@@ -34,7 +57,7 @@ export default function MyFooter() {
             <div>
               <Footer.Title title="Services" />
               <Footer.LinkGroup col>
-                <Footer.Link as={Link} to="/">
+                <Footer.Link as={Link} to="/monitoring">
                   Air Monitoring
                 </Footer.Link>
                 <Footer.Link as={Link} to="/predictions">
@@ -45,19 +68,13 @@ export default function MyFooter() {
             <div>
               <Footer.Title title="Legal" />
               <Footer.LinkGroup col>
-                <Footer.Link
-                  onClick={() => openModal("privacy")}
-                  style={{ cursor: "pointer" }}
-                >
+                {/* Add onClick handlers to open the modal */}
+                <Footer.Link onClick={() => handlePdfLinkClick("privacy")}>
                   Privacy Policy
                 </Footer.Link>
-                <Footer.Link
-                  onClick={() => openModal("terms")}
-                  style={{ cursor: "pointer" }}
-                >
+                <Footer.Link onClick={() => handlePdfLinkClick("terms")}>
                   Terms &amp; Conditions
                 </Footer.Link>
-                <PDFViewerPage />
               </Footer.LinkGroup>
             </div>
           </div>
@@ -82,6 +99,10 @@ export default function MyFooter() {
           </div>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {/* Pass PDF URL and onClose function to PDFViewer */}
+        <PDFViewer pdfUrl={pdfUrl} onClose={closeModal} />
+      </Modal>
     </Footer>
   );
 }
