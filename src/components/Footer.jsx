@@ -1,12 +1,7 @@
 import { Footer } from "flowbite-react";
-import {
-  BsDribbble,
-  BsFacebook,
-  BsGithub,
-  BsInstagram,
-  BsTwitter,
-} from "react-icons/bs";
+import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import PDFViewerPage from "./Pdfview";
 
 export default function MyFooter() {
   return (
@@ -50,8 +45,19 @@ export default function MyFooter() {
             <div>
               <Footer.Title title="Legal" />
               <Footer.LinkGroup col>
-                <Footer.Link href="#">Privacy Policy</Footer.Link>
-                <Footer.Link href="#">Terms &amp; Conditions</Footer.Link>
+                <Footer.Link
+                  onClick={() => openModal("privacy")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Privacy Policy
+                </Footer.Link>
+                <Footer.Link
+                  onClick={() => openModal("terms")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Terms &amp; Conditions
+                </Footer.Link>
+                <PDFViewerPage />
               </Footer.LinkGroup>
             </div>
           </div>
