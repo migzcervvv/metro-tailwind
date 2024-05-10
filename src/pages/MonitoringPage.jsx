@@ -235,7 +235,7 @@ export default function MonitoringPage() {
                   <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                       <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        CO (Carbon Monoxide)
+                        CO
                       </Table.Cell>
                       <Table.Cell
                         style={{
@@ -256,7 +256,7 @@ export default function MonitoringPage() {
 
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                       <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        O3 (Ozone)
+                        O3
                       </Table.Cell>
                       <Table.Cell
                         style={{
