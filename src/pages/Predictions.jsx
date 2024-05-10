@@ -264,7 +264,7 @@ export default function Predictions() {
                                 <CircularProgressbar
                                   value={value}
                                   maxValue={500}
-                                  text={`${value.toFixed(2)}%`}
+                                  text={`${value.toFixed(0)} aqi`}
                                 />
                               ) : (
                                 <p>Data for index {index} is missing</p>
