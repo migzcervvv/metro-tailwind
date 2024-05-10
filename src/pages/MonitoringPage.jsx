@@ -212,7 +212,7 @@ export default function MonitoringPage() {
                 <Table hoverable={true}>
                   <Table.Head>
                     <Table.HeadCell>Pollutant </Table.HeadCell>
-                    <Table.HeadCell>AQI</Table.HeadCell>
+                    <Table.HeadCell>Parts per Million</Table.HeadCell>
                     <Table.HeadCell>
                       Level{" "}
                       <Popover

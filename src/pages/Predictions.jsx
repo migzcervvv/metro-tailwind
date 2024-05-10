@@ -231,8 +231,8 @@ export default function Predictions() {
 
                   return (
                     <div key={dayIndex} className="mb-4">
-                      <h2 className="text-lg font-semibold text-center">
-                        {dateString} Smog Occurrence Meter
+                      <h2 className="text-lg font-semibold text-center dark:text-white">
+                        {dateString}
                       </h2>
                       <div
                         style={{
