@@ -3,25 +3,22 @@ import Temperature from "../components/Temperature";
 import Highlights from "../components/Highlights";
 import MyFooter from "../components/Footer";
 import CallToAction from "../components/CallToAction";
-import { Card, Spinner } from "flowbite-react";
+import { Card, Popover, Spinner } from "flowbite-react";
 import { Table } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFirebaseData } from "../redux/store";
+import { BiRefresh } from "react-icons/bi";
 
 export default function MonitoringPage() {
   const [city, setCity] = useState("La Lloma, Quezon City");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [highestPollutant, setHighestPollutant] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   const api = import.meta.env.VITE_WEATHER_API_KEY;
 
   const dispatch = useDispatch();
   const { data, error } = useSelector((state) => state.data);
-
-  useEffect(() => {
-    dispatch(fetchFirebaseData());
-  }, [dispatch]);
 
   useEffect(() => {
     const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${api}&q=Quezon City&aqi=yes`;
@@ -45,8 +42,19 @@ export default function MonitoringPage() {
   }, [city]);
 
   useEffect(() => {
-    dispatch(fetchFirebaseData());
-  }, [dispatch]);
+    if (!refreshing && !loading) {
+      dispatch(fetchFirebaseData());
+    }
+  }, [dispatch, refreshing, loading]);
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    setLoading(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      setLoading(false);
+    }, 2000);
+  };
 
   const getLatestValues = (data) => {
     const latestValues = {};
@@ -56,13 +64,11 @@ export default function MonitoringPage() {
         typeof data[key] === "object" &&
         data[key].Value
       ) {
-        // Accessing the 'Value' key of each parameter
         const valueObject = data[key].Value;
         const valueEntries = Object.entries(valueObject);
         if (valueEntries.length > 0) {
-          // Assuming entries are ordered and the last one is the latest
           const latestEntry = valueEntries[valueEntries.length - 1];
-          latestValues[key] = latestEntry[1]; // Storing only the value part
+          latestValues[key] = latestEntry[1];
         }
       }
     }
@@ -192,13 +198,7 @@ export default function MonitoringPage() {
               (O₃), and Particulate Matter (PM 10, PM 2.5). These parameters are
               measured by ppm or parts per million. It is a unit used to
               describe very small concentrations of a substance in a larger
-              solution. The current highest pollutant is&nbsp;
-              {!loading && highestPollutant && (
-                <span>
-                  {highestPollutant.name} with a measurement of{" "}
-                  {highestPollutant.aqi} ppm.
-                </span>
-              )}
+              solution.
             </p>
           </div>
           {loading ? (
@@ -211,9 +211,26 @@ export default function MonitoringPage() {
               <div className="flex flex-col items-center">
                 <Table hoverable={true}>
                   <Table.Head>
-                    <Table.HeadCell>Pollutant</Table.HeadCell>
+                    <Table.HeadCell>Pollutant </Table.HeadCell>
                     <Table.HeadCell>AQI</Table.HeadCell>
-                    <Table.HeadCell>Level</Table.HeadCell>
+                    <Table.HeadCell>
+                      Level{" "}
+                      <Popover
+                        aria-labelledby="default-popover"
+                        trigger="hover"
+                        content={
+                          <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                            <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                              <h3 id="default-popover">Refresh</h3>
+                            </div>
+                          </div>
+                        }
+                      >
+                        <button onClick={handleRefresh}>
+                          <BiRefresh fontSize={24} />
+                        </button>
+                      </Popover>
+                    </Table.HeadCell>
                   </Table.Head>
                   <Table.Body className="divide-y">
                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -308,7 +325,7 @@ export default function MonitoringPage() {
                           color: "black",
                         }}
                       >
-                        {latestData["VOC (Volatile Organic Compounds)"]}
+                        {latestData["VOC (Volatile Organic Compounds)"]} ppm
                       </Table.Cell>
                       <Table.Cell className="text-lime-950 dark:text-lime-50">
                         {getAqiLevel(
