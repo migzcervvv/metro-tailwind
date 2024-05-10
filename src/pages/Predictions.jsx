@@ -9,10 +9,9 @@ import "react-circular-progressbar/dist/styles.css";
 
 export default function Predictions() {
   const [forecast, setForecast] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(null); // Adjusted to null for no initially active item
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [forecastData, setForecastData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const value = 140;
-  const color = "dark";
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -51,6 +50,53 @@ export default function Predictions() {
     setActiveIndex(index === activeIndex ? null : index);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://metro.pythonanywhere.com/predict"
+        );
+        setForecastData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const pollutants = [
+    {
+      name: "PM2.5",
+      description: "Particulate matter that is 2 ½ microns or less in width.",
+      color: "bg-blue-500",
+    },
+    {
+      name: "PM10",
+      description: "Particulate matter that is 10 microns or less in diameter.",
+      color: "bg-green-500",
+    },
+    {
+      name: "VOCS",
+      description:
+        "Volatile organic compounds are emitted as gases from certain solids or liquids.",
+      color: "bg-yellow-500",
+    },
+    {
+      name: "CO",
+      description:
+        "Carbon monoxide is an odorless, colorless gas formed by the incomplete combustion of fuels.",
+      color: "bg-red-500",
+    },
+    {
+      name: "O₃",
+      description:
+        "Ozone is a gas created by the reaction between oxides of nitrogen and volatile organic compounds.",
+      color: "bg-purple-500",
+    },
+  ];
   return (
     <>
       <div className="min-h-screen">
@@ -169,205 +215,92 @@ export default function Predictions() {
               <small>Click or hover the buttons for more information!</small>
             </i>
 
-            <Progress
-              progress={33}
-              color={`${color}`}
-              textLabel="Smog Meter"
-              textLabelPosition="outside"
-              progressLabelPosition="outside"
-              size="lg"
-              labelText
-              labelProgress
-            />
+            <div className="p-4">
+              {loading ? (
+                <p>No data available.</p>
+              ) : forecastData.length > 0 ? (
+                forecastData.map((dayData, dayIndex) => {
+                  const date = new Date(); // Today's date
+                  date.setDate(date.getDate() + dayIndex); // Increment date by index
+                  const dateString = date.toLocaleDateString("en-US", {
+                    weekday: "long", // e.g., Monday
+                    year: "numeric", // e.g., 2024
+                    month: "long", // e.g., January
+                    day: "numeric", // e.g., 31
+                  });
 
-            <div className="flex flex-wrap sm:grid sm:grid-cols-2 md:grid-cols-4 justify-center gap-4">
-              <Card className="max-w-sm flex items-center">
-                <div className="max-w-32 max-h-32">
-                  <CircularProgressbar
-                    value={value}
-                    maxValue={500}
-                    text={`${value}%`}
-                  />
-                </div>{" "}
-                <Popover
-                  trigger="hover"
-                  aria-labelledby="default-popover"
-                  placement="top"
-                  content={
-                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                        <h3
-                          id="default-popover"
-                          className="font-semibold text-gray-900 dark:text-white"
-                        >
-                          Particulate Matter 10
-                        </h3>
+                  return (
+                    <div key={dayIndex} className="mb-4">
+                      <h2 className="text-lg font-semibold text-center">
+                        {dateString} Smog Occurrence Meter
+                      </h2>
+                      <div
+                        style={{
+                          width: 100,
+                          height: 100,
+                          margin: "auto",
+                          paddingTop: "20px",
+                          zIndex: "100",
+                        }}
+                      >
+                        {dayData[5] !== undefined ? (
+                          <CircularProgressbar
+                            value={dayData[5]}
+                            maxValue={100}
+                            text={`${dayData[5].toFixed(0)}%`}
+                          />
+                        ) : (
+                          <p>Data for Smog Index is missing</p>
+                        )}
                       </div>
-                      <div className="px-3 py-2">
-                        <p>
-                          PM10 is particulate matter that is 10 microns (μm) or
-                          less in diameter. It is a mixture of materials that
-                          can include soot, metals, salt, and dust.
-                        </p>
+                      <div className="flex flex-wrap sm:grid sm:grid-cols-2 md:grid-cols-4 justify-center gap-4 mt-4">
+                        {dayData.slice(0, 5).map((value, index) => (
+                          <Card
+                            key={index}
+                            className="max-w-sm flex items-center p-4 gap-4"
+                          >
+                            <div style={{ width: 80, height: 80 }}>
+                              {typeof value === "number" ? (
+                                <CircularProgressbar
+                                  value={value}
+                                  maxValue={500}
+                                  text={`${value.toFixed(2)}%`}
+                                />
+                              ) : (
+                                <p>Data for index {index} is missing</p>
+                              )}
+                            </div>
+                            <Popover
+                              trigger="hover"
+                              placement="top"
+                              content={
+                                <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                                  <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                                      {pollutants[index].name}
+                                    </h3>
+                                  </div>
+                                  <div className="px-3 py-2">
+                                    <p>{pollutants[index].description}</p>
+                                  </div>
+                                </div>
+                              }
+                            >
+                              <Button className="w-full">
+                                {pollutants[index].name}
+                              </Button>
+                            </Popover>
+                          </Card>
+                        ))}
                       </div>
                     </div>
-                  }
-                >
-                  <Button className="w-full">PM 10</Button>
-                </Popover>
-              </Card>
-
-              <Card className="max-w-sm flex items-center">
-                <div className="max-w-32 max-h-32">
-                  <CircularProgressbar
-                    value={value}
-                    maxValue={500}
-                    text={`${value}%`}
-                  />
-                </div>{" "}
-                <Popover
-                  trigger="hover"
-                  placement="top"
-                  aria-labelledby="default-popover"
-                  content={
-                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                        <h3
-                          id="default-popover"
-                          className="font-semibold text-gray-900 dark:text-white"
-                        >
-                          Particulate Matter 2.5
-                        </h3>
-                      </div>
-                      <div className="px-3 py-2">
-                        <p>
-                          The term fine particles, or particulate matter 2.5
-                          (PM2.5), refers to tiny particles or droplets in the
-                          air that are 2 ½ microns or less in width. The largest
-                          PM2.5 particles are about 30-times smaller than a
-                          human hair.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                >
-                  <Button>PM 2.5</Button>
-                </Popover>
-              </Card>
-
-              <Card className="max-w-sm flex items-center">
-                <div className="max-w-32 max-h-32">
-                  <CircularProgressbar
-                    value={value}
-                    maxValue={500}
-                    text={`${value}%`}
-                  />
-                </div>{" "}
-                <Popover
-                  trigger="hover"
-                  placement="top"
-                  aria-labelledby="default-popover"
-                  content={
-                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                        <h3
-                          id="default-popover"
-                          className="font-semibold text-gray-900 dark:text-white"
-                        >
-                          Carbon Monoxide
-                        </h3>
-                      </div>
-                      <div className="px-3 py-2">
-                        <p>
-                          Carbon monoxide (CO) is an odorless, colorless gas
-                          formed by the incomplete combustion of fuels. When
-                          people are exposed to CO gas, the CO molecules will
-                          displace the oxygen in their bodies and lead to
-                          poisoning.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                >
-                  <Button>CO</Button>
-                </Popover>
-              </Card>
-
-              <Card className="max-w-sm flex items-center">
-                <div className="max-w-32 max-h-32">
-                  <CircularProgressbar
-                    value={value}
-                    maxValue={500}
-                    text={`${value}%`}
-                  />
-                </div>{" "}
-                <Popover
-                  trigger="hover"
-                  placement="top"
-                  aria-labelledby="default-popover"
-                  content={
-                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                        <h3
-                          id="default-popover"
-                          className="font-semibold text-gray-900 dark:text-white"
-                        >
-                          Volatile Organic Compounds
-                        </h3>
-                      </div>
-                      <div className="px-3 py-2">
-                        <p>
-                          Volatile organic compounds (VOCs) are emitted as gases
-                          from certain solids or liquids. VOCs include a variety
-                          of chemicals, some of which may have short- and
-                          long-term adverse health effects.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                >
-                  <Button>VOCs</Button>
-                </Popover>
-              </Card>
-
-              <Card className="max-w-sm flex items-center">
-                <div className="max-w-32 max-h-32">
-                  <CircularProgressbar
-                    value={value}
-                    maxValue={500}
-                    text={`${value}%`}
-                  />
-                </div>{" "}
-                <Popover
-                  trigger="hover"
-                  placement="top"
-                  aria-labelledby="default-popover"
-                  content={
-                    <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                      <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                        <h3
-                          id="default-popover"
-                          className="font-semibold text-gray-900 dark:text-white"
-                        >
-                          Ozone
-                        </h3>
-                      </div>
-                      <div className="px-3 py-2">
-                        <p>
-                          Ozone (O3) is a gas created by a chemical reaction
-                          between oxides of nitrogen (NOx) and volatile organic
-                          compounds (VOCs). Motor vehicle exhaust and industrial
-                          emissions, gasoline vapors, and chemical solvents as
-                          well as natural sources emit NOx and VOCs that help
-                          form ozone.
-                        </p>
-                      </div>
-                    </div>
-                  }
-                >
-                  <Button>O₃</Button>
-                </Popover>
-              </Card>
+                  );
+                })
+              ) : (
+                <div className="flex justify-center items-center h-64">
+                  <Spinner aria-label="Loading..." />
+                </div>
+              )}
             </div>
           </Card>
         </div>

@@ -5,27 +5,23 @@ import PDFViewer from "./Pdfview";
 import { useState } from "react";
 
 export default function MyFooter() {
-  const [pdfUrl, setPdfUrl] = useState(""); // State to store the PDF URL
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal open/close
-
+  const [pdfUrl, setPdfUrl] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handlePdfLinkClick = (type) => {
-    console.log("Link clicked:", type); // Check if the function is being called
-    // Based on the link clicked, set the PDF URL and open the modal
+    console.log("Link clicked:", type);
     if (type === "privacy") {
-      setPdfUrl("/policy.pdf"); // PDF URL for privacy policy
+      setPdfUrl("/policy.pdf");
     } else if (type === "terms") {
-      setPdfUrl("/terms.pdf"); // PDF URL for terms and conditions
+      setPdfUrl("/terms.pdf");
     }
-    setIsModalOpen(true); // Open modal after setting PDF URL
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
     console.log("Closing modal");
     setPdfUrl("");
-    setIsModalOpen(false); // Close modal by setting isModalOpen to false
+    setIsModalOpen(false);
   };
-
-  console.log("isModalOpen:", isModalOpen); // Debugging: Check if modal state is updated
 
   return (
     <Footer
@@ -69,10 +65,16 @@ export default function MyFooter() {
               <Footer.Title title="Legal" />
               <Footer.LinkGroup col>
                 {/* Add onClick handlers to open the modal */}
-                <Footer.Link onClick={() => handlePdfLinkClick("privacy")}>
+                <Footer.Link
+                  onClick={() => handlePdfLinkClick("privacy")}
+                  style={{ cursor: "pointer" }}
+                >
                   Privacy Policy
                 </Footer.Link>
-                <Footer.Link onClick={() => handlePdfLinkClick("terms")}>
+                <Footer.Link
+                  onClick={() => handlePdfLinkClick("terms")}
+                  style={{ cursor: "pointer" }}
+                >
                   Terms &amp; Conditions
                 </Footer.Link>
               </Footer.LinkGroup>
