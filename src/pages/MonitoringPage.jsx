@@ -93,6 +93,18 @@ export default function MonitoringPage() {
     if (aqi <= 300) return "Very Unhealthy";
     return "Hazardous";
   };
+
+  const calculateAqi = (value, pollutant) => {
+    // Assuming linear conversion from PPM to AQI for simplicity
+    // You may replace this with the actual conversion equation for each pollutant
+    const aqi = value * 10; // Just for demonstration purposes, replace with actual conversion
+    return {
+      aqi: aqi,
+      color: getAqiColor(aqi),
+      level: getAqiLevel(aqi),
+    };
+  };
+
   const latestData = data ? getLatestValues(data) : {};
   return (
     <>
@@ -212,7 +224,7 @@ export default function MonitoringPage() {
                 <Table hoverable={true}>
                   <Table.Head>
                     <Table.HeadCell>Pollutant </Table.HeadCell>
-                    <Table.HeadCell>Parts per Million</Table.HeadCell>
+                    <Table.HeadCell>Measurement</Table.HeadCell>
                     <Table.HeadCell>
                       Level{" "}
                       <Popover
@@ -240,17 +252,28 @@ export default function MonitoringPage() {
                       <Table.Cell
                         style={{
                           backgroundColor: getAqiColor(
-                            parseFloat(latestData["CO (Carbon Monoxide)"])
+                            calculateAqi(
+                              parseFloat(latestData["CO (Carbon Monoxide)"]),
+                              "CO"
+                            ).aqi
                           ),
                           color: "black",
                         }}
                       >
-                        {latestData["CO (Carbon Monoxide)"]}
+                        {
+                          calculateAqi(
+                            parseFloat(latestData["CO (Carbon Monoxide)"]),
+                            "CO"
+                          ).aqi
+                        }
                       </Table.Cell>
                       <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(
-                          parseFloat(latestData["CO (Carbon Monoxide)"])
-                        )}
+                        {
+                          calculateAqi(
+                            parseFloat(latestData["CO (Carbon Monoxide)"]),
+                            "CO"
+                          ).level
+                        }
                       </Table.Cell>
                     </Table.Row>
 
@@ -261,15 +284,28 @@ export default function MonitoringPage() {
                       <Table.Cell
                         style={{
                           backgroundColor: getAqiColor(
-                            parseFloat(latestData["O3 (Ozone)"])
+                            calculateAqi(
+                              parseFloat(latestData["O3 (Ozone)"]),
+                              "O3"
+                            ).aqi
                           ),
                           color: "black",
                         }}
                       >
-                        {latestData["O3 (Ozone)"]}
+                        {
+                          calculateAqi(
+                            parseFloat(latestData["O3 (Ozone)"]),
+                            "O3"
+                          ).aqi
+                        }
                       </Table.Cell>
                       <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(parseFloat(latestData["O3 (Ozone)"]))}
+                        {
+                          calculateAqi(
+                            parseFloat(latestData["O3 (Ozone)"]),
+                            "O3"
+                          ).level
+                        }
                       </Table.Cell>
                     </Table.Row>
 
@@ -280,15 +316,22 @@ export default function MonitoringPage() {
                       <Table.Cell
                         style={{
                           backgroundColor: getAqiColor(
-                            parseFloat(latestData["PM10"])
+                            calculateAqi(parseFloat(latestData["PM10"]), "PM10")
+                              .aqi
                           ),
                           color: "black",
                         }}
                       >
-                        {latestData["PM10"]}
+                        {
+                          calculateAqi(parseFloat(latestData["PM10"]), "PM10")
+                            .aqi
+                        }
                       </Table.Cell>
                       <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(parseFloat(latestData["PM10"]))}
+                        {
+                          calculateAqi(parseFloat(latestData["PM10"]), "PM10")
+                            .level
+                        }
                       </Table.Cell>
                     </Table.Row>
 
@@ -299,15 +342,22 @@ export default function MonitoringPage() {
                       <Table.Cell
                         style={{
                           backgroundColor: getAqiColor(
-                            parseFloat(latestData["PM25"])
+                            calculateAqi(parseFloat(latestData["PM25"]), "PM25")
+                              .aqi
                           ),
                           color: "black",
                         }}
                       >
-                        {latestData["PM25"]}
+                        {
+                          calculateAqi(parseFloat(latestData["PM25"]), "PM25")
+                            .aqi
+                        }
                       </Table.Cell>
                       <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(parseFloat(latestData["PM25"]))}
+                        {
+                          calculateAqi(parseFloat(latestData["PM25"]), "PM25")
+                            .level
+                        }
                       </Table.Cell>
                     </Table.Row>
 
@@ -318,21 +368,35 @@ export default function MonitoringPage() {
                       <Table.Cell
                         style={{
                           backgroundColor: getAqiColor(
-                            parseFloat(
-                              latestData["VOC (Volatile Organic Compounds)"]
-                            )
+                            calculateAqi(
+                              parseFloat(
+                                latestData["VOC (Volatile Organic Compounds)"]
+                              ),
+                              "VOCs"
+                            ).aqi
                           ),
                           color: "black",
                         }}
                       >
-                        {latestData["VOC (Volatile Organic Compounds)"]} ppm
+                        {
+                          calculateAqi(
+                            parseFloat(
+                              latestData["VOC (Volatile Organic Compounds)"]
+                            ),
+                            "VOCs"
+                          ).aqi
+                        }{" "}
+                        index
                       </Table.Cell>
                       <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(
-                          parseFloat(
-                            latestData["VOC (Volatile Organic Compounds)"]
-                          )
-                        )}
+                        {
+                          calculateAqi(
+                            parseFloat(
+                              latestData["VOC (Volatile Organic Compounds)"]
+                            ),
+                            "VOCs"
+                          ).level
+                        }
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>
