@@ -52,51 +52,21 @@ export default function Predictions() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Set loading state to true before fetching data
       try {
         const response = await axios.get(
-          "https://metro.pythonanywhere.com/predict"
+          "https://metrobreathe.onrender.com/predict"
         );
         setForecastData(response.data);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching data: ", error);
-        setLoading(false);
       }
+      setLoading(false); // Set loading state to false after fetching data
     };
 
     fetchData();
   }, []);
 
-  const pollutants = [
-    {
-      name: "PM2.5",
-      description: "Particulate matter that is 2 ½ microns or less in width.",
-      color: "bg-blue-500",
-    },
-    {
-      name: "PM10",
-      description: "Particulate matter that is 10 microns or less in diameter.",
-      color: "bg-green-500",
-    },
-    {
-      name: "VOCS",
-      description:
-        "Volatile organic compounds are emitted as gases from certain solids or liquids.",
-      color: "bg-yellow-500",
-    },
-    {
-      name: "CO",
-      description:
-        "Carbon monoxide is an odorless, colorless gas formed by the incomplete combustion of fuels.",
-      color: "bg-red-500",
-    },
-    {
-      name: "O₃",
-      description:
-        "Ozone is a gas created by the reaction between oxides of nitrogen and volatile organic compounds.",
-      color: "bg-purple-500",
-    },
-  ];
   return (
     <>
       <div className="min-h-screen">
@@ -214,95 +184,27 @@ export default function Predictions() {
             <i className="text-center text-sm md:text-md lg:text-lg">
               <small>Click or hover the buttons for more information!</small>
             </i>
-
-            <div className="p-4">
-              {loading ? (
-                <p>No data available.</p>
-              ) : forecastData.length > 0 ? (
-                forecastData.map((dayData, dayIndex) => {
-                  const date = new Date(); // Today's date
-                  date.setDate(date.getDate() + dayIndex); // Increment date by index
-                  const dateString = date.toLocaleDateString("en-US", {
-                    weekday: "long", // e.g., Monday
-                    year: "numeric", // e.g., 2024
-                    month: "long", // e.g., January
-                    day: "numeric", // e.g., 31
-                  });
-
-                  return (
-                    <div key={dayIndex} className="mb-4">
-                      <h2 className="text-lg font-semibold text-center dark:text-white">
-                        {dateString}
-                      </h2>
-                      <div
-                        style={{
-                          width: 100,
-                          height: 100,
-                          margin: "auto",
-                          paddingTop: "20px",
-                          zIndex: "100",
-                        }}
-                      >
-                        {dayData[5] !== undefined ? (
-                          <CircularProgressbar
-                            value={dayData[5]}
-                            maxValue={100}
-                            text={`${dayData[5].toFixed(0)}%`}
-                          />
-                        ) : (
-                          <p>Data for Smog Index is missing</p>
-                        )}
-                      </div>
-                      <div className="flex flex-wrap sm:grid sm:grid-cols-2 md:grid-cols-4 justify-center gap-4 mt-4">
-                        {dayData.slice(0, 5).map((value, index) => (
-                          <Card
-                            key={index}
-                            className="max-w-sm flex items-center p-4 gap-4"
-                          >
-                            <div style={{ width: 80, height: 80 }}>
-                              {typeof value === "number" ? (
-                                <CircularProgressbar
-                                  value={value}
-                                  maxValue={500}
-                                  text={`${value.toFixed(0)} aqi`}
-                                />
-                              ) : (
-                                <p>Data for index {index} is missing</p>
-                              )}
-                            </div>
-                            <Popover
-                              trigger="hover"
-                              placement="top"
-                              content={
-                                <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                                  <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                                    <h3 className="font-semibold text-gray-900 dark:text-white">
-                                      {pollutants[index].name}
-                                    </h3>
-                                  </div>
-                                  <div className="px-3 py-2">
-                                    <p>{pollutants[index].description}</p>
-                                  </div>
-                                </div>
-                              }
-                            >
-                              <Button className="w-full">
-                                {pollutants[index].name}
-                              </Button>
-                            </Popover>
-                          </Card>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <div className="flex justify-center items-center h-64">
-                  <Spinner aria-label="Loading..." />
-                </div>
-              )}
-            </div>
           </Card>
+
+          <div>
+            {loading ? (
+              <div className="flex justify-center items-center h-20">
+                <Spinner aria-label="Default status example" />
+                <p className="ml-2">Loading forecast data...</p>
+              </div>
+            ) : (
+              <div>
+                {Object.keys(forecastData).map((day, index) => (
+                  <div key={index}>
+                    <h2>Day {index + 1}</h2>
+                    <p>Smog Percentage: {forecastData[day].smog_percentage}</p>
+                    <p>Wind Direction: {forecastData[day].wind_direction}</p>
+                    <p>Wind Speed: {forecastData[day].wind_speed}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <CallToAction />

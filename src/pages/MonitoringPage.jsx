@@ -3,25 +3,28 @@ import Temperature from "../components/Temperature";
 import Highlights from "../components/Highlights";
 import MyFooter from "../components/Footer";
 import CallToAction from "../components/CallToAction";
-import { Card, Popover, Spinner } from "flowbite-react";
-import { Table } from "flowbite-react";
+import { Card, Popover, Spinner, Table } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFirebaseData } from "../redux/store";
 import { BiRefresh } from "react-icons/bi";
+import {
+  convertCOtoAQI,
+  convertO3toAQI,
+  convertPM25toAQI,
+  convertPM10toAQI,
+} from "../utils/aqiCalculations";
 
 export default function MonitoringPage() {
   const [city, setCity] = useState("La Lloma, Quezon City");
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-
   const api = import.meta.env.VITE_WEATHER_API_KEY;
-
   const dispatch = useDispatch();
   const { data, error } = useSelector((state) => state.data);
 
   useEffect(() => {
-    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${api}&q=Quezon City&aqi=yes`;
+    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${api}&q=${city}&aqi=yes`;
 
     fetch(apiUrl)
       .then((res) => {
@@ -39,7 +42,7 @@ export default function MonitoringPage() {
       .catch((e) => {
         console.log(e);
       });
-  }, [city]);
+  }, [city, api]);
 
   useEffect(() => {
     if (!refreshing && !loading) {
@@ -57,23 +60,37 @@ export default function MonitoringPage() {
   };
 
   const getLatestValues = (data) => {
+    const pollutantKeys = [
+      "PM25",
+      "PM10",
+      "VOC (Volatile Organic Compounds)",
+      "CO (Carbon Monoxide)",
+      "O3 (Ozone)",
+    ]; // Define the keys for pollutants you care about
     const latestValues = {};
-    for (const key in data) {
-      if (
-        data.hasOwnProperty(key) &&
-        typeof data[key] === "object" &&
-        data[key].Value
-      ) {
-        const valueObject = data[key].Value;
-        const valueEntries = Object.entries(valueObject);
-        if (valueEntries.length > 0) {
-          const latestEntry = valueEntries[valueEntries.length - 1];
-          latestValues[key] = latestEntry[1];
+
+    if (data) {
+      for (const key in data) {
+        if (
+          data.hasOwnProperty(key) &&
+          typeof data[key] === "object" &&
+          data[key].Value &&
+          pollutantKeys.includes(key) // Check if the key is one of the pollutants
+        ) {
+          const valueObject = data[key].Value;
+          const valueEntries = Object.entries(valueObject);
+          if (valueEntries.length > 0) {
+            const latestEntry = valueEntries[valueEntries.length - 1];
+            latestValues[key] = latestEntry[1];
+          }
         }
       }
     }
     return latestValues;
   };
+
+  // Calculate AQI for each pollutant
+  const latestData = data ? getLatestValues(data) : {};
 
   const getAqiColor = (aqi) => {
     if (aqi >= 0 && aqi <= 50) return "#00e400"; // Good (0-50)
@@ -81,7 +98,7 @@ export default function MonitoringPage() {
     if (aqi <= 150) return "#ff7e00"; // Unhealthy for Sensitive Groups (101-150)
     if (aqi <= 200) return "#ff0000"; // Unhealthy (151-200)
     if (aqi <= 300) return "#8f3f97"; // Very Unhealthy (201-300)
-    if (aqi <= 500) return "#7e0023"; // Hazardous (301-500)
+    if (aqi > 300) return "#7e0023"; // Hazardous (301+)
     return "#ffffff"; // Default color
   };
 
@@ -91,9 +108,12 @@ export default function MonitoringPage() {
     if (aqi <= 150) return "Unhealthy for Sensitive Groups";
     if (aqi <= 200) return "Unhealthy";
     if (aqi <= 300) return "Very Unhealthy";
-    return "Hazardous";
+    if (aqi > 300) return "Hazardous";
+    return "Unknown"; // Default level
   };
-  const latestData = data ? getLatestValues(data) : {};
+
+  // Ensure this data is used only after its initialization
+  if (loading) return <Spinner size="xl" />;
   return (
     <>
       <div className="min-h-screen flex flex-col justify-start pt-20 items-center">
@@ -211,130 +231,64 @@ export default function MonitoringPage() {
               <div className="flex flex-col items-center">
                 <Table hoverable={true}>
                   <Table.Head>
-                    <Table.HeadCell>Pollutant </Table.HeadCell>
-                    <Table.HeadCell>Parts per Million</Table.HeadCell>
-                    <Table.HeadCell>
-                      Level{" "}
-                      <Popover
-                        aria-labelledby="default-popover"
-                        trigger="hover"
-                        content={
-                          <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
-                            <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
-                              <h3 id="default-popover">Refresh</h3>
-                            </div>
-                          </div>
-                        }
-                      >
-                        <button onClick={handleRefresh}>
-                          <BiRefresh fontSize={24} />
-                        </button>
-                      </Popover>
-                    </Table.HeadCell>
+                    <Table.HeadCell>Pollutant</Table.HeadCell>
+                    <Table.HeadCell>Air Quality Index (AQI)</Table.HeadCell>
+                    <Table.HeadCell>Level</Table.HeadCell>
+                    <Table.HeadCell>Action</Table.HeadCell>
                   </Table.Head>
                   <Table.Body className="divide-y">
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        CO
-                      </Table.Cell>
-                      <Table.Cell
-                        style={{
-                          backgroundColor: getAqiColor(
-                            parseFloat(latestData["CO (Carbon Monoxide)"])
-                          ),
-                          color: "black",
-                        }}
-                      >
-                        {latestData["CO (Carbon Monoxide)"]}
-                      </Table.Cell>
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(
-                          parseFloat(latestData["CO (Carbon Monoxide)"])
-                        )}
-                      </Table.Cell>
-                    </Table.Row>
+                    {Object.entries(latestData).map(([key, value]) => {
+                      const aqiValue = key.includes("CO")
+                        ? convertCOtoAQI(value)
+                        : key.includes("O3")
+                        ? convertO3toAQI(value)
+                        : key.includes("PM10")
+                        ? convertPM10toAQI(value)
+                        : key.includes("PM25")
+                        ? convertPM25toAQI(value)
+                        : parseFloat(value); // Assuming VOCs are already in AQI format
 
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        O3
-                      </Table.Cell>
-                      <Table.Cell
-                        style={{
-                          backgroundColor: getAqiColor(
-                            parseFloat(latestData["O3 (Ozone)"])
-                          ),
-                          color: "black",
-                        }}
-                      >
-                        {latestData["O3 (Ozone)"]}
-                      </Table.Cell>
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(parseFloat(latestData["O3 (Ozone)"]))}
-                      </Table.Cell>
-                    </Table.Row>
-
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        PM10
-                      </Table.Cell>
-                      <Table.Cell
-                        style={{
-                          backgroundColor: getAqiColor(
-                            parseFloat(latestData["PM10"])
-                          ),
-                          color: "black",
-                        }}
-                      >
-                        {latestData["PM10"]}
-                      </Table.Cell>
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(parseFloat(latestData["PM10"]))}
-                      </Table.Cell>
-                    </Table.Row>
-
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        PM25
-                      </Table.Cell>
-                      <Table.Cell
-                        style={{
-                          backgroundColor: getAqiColor(
-                            parseFloat(latestData["PM25"])
-                          ),
-                          color: "black",
-                        }}
-                      >
-                        {latestData["PM25"]}
-                      </Table.Cell>
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(parseFloat(latestData["PM25"]))}
-                      </Table.Cell>
-                    </Table.Row>
-
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        VOCs
-                      </Table.Cell>
-                      <Table.Cell
-                        style={{
-                          backgroundColor: getAqiColor(
-                            parseFloat(
-                              latestData["VOC (Volatile Organic Compounds)"]
-                            )
-                          ),
-                          color: "black",
-                        }}
-                      >
-                        {latestData["VOC (Volatile Organic Compounds)"]} ppm
-                      </Table.Cell>
-                      <Table.Cell className="text-lime-950 dark:text-lime-50">
-                        {getAqiLevel(
-                          parseFloat(
-                            latestData["VOC (Volatile Organic Compounds)"]
-                          )
-                        )}
-                      </Table.Cell>
-                    </Table.Row>
+                      const aqiColor = getAqiColor(aqiValue);
+                      const aqiLevel = getAqiLevel(aqiValue);
+                      return (
+                        <Table.Row
+                          key={key}
+                          className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                        >
+                          <Table.Cell className="text-lime-950 dark:text-lime-50">
+                            {key}
+                          </Table.Cell>
+                          <Table.Cell
+                            style={{
+                              backgroundColor: aqiColor,
+                              color: "black",
+                            }}
+                          >
+                            {aqiValue} AQI
+                          </Table.Cell>
+                          <Table.Cell className="text-lime-950 dark:text-lime-50">
+                            {aqiLevel}
+                          </Table.Cell>
+                          <Table.Cell>
+                            <Popover
+                              aria-labelledby="default-popover"
+                              trigger="hover"
+                              content={
+                                <div className="w-64 text-sm text-gray-500 dark:text-gray-400">
+                                  <div className="border-b border-gray-200 bg-gray-100 px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+                                    Click to refresh data
+                                  </div>
+                                </div>
+                              }
+                            >
+                              <button onClick={handleRefresh}>
+                                <BiRefresh fontSize={24} />
+                              </button>
+                            </Popover>
+                          </Table.Cell>
+                        </Table.Row>
+                      );
+                    })}
                   </Table.Body>
                 </Table>
               </div>
