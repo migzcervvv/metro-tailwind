@@ -3,7 +3,7 @@ import MyFooter from "../components/Footer";
 import CallToAction from "../components/CallToAction";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Spinner, Card, Progress, Popover, Button } from "flowbite-react";
+import { Spinner, Card } from "flowbite-react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -52,7 +52,7 @@ export default function Predictions() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true); // Set loading state to true before fetching data
+      setLoading(true);
       try {
         const response = await axios.get(
           "https://metrobreathe.onrender.com/predict"
@@ -61,7 +61,7 @@ export default function Predictions() {
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
-      setLoading(false); // Set loading state to false after fetching data
+      setLoading(false);
     };
 
     fetchData();
@@ -184,27 +184,51 @@ export default function Predictions() {
             <i className="text-center text-sm md:text-md lg:text-lg">
               <small>Click or hover the buttons for more information!</small>
             </i>
-          </Card>
 
-          <div>
-            {loading ? (
-              <div className="flex justify-center items-center h-20">
-                <Spinner aria-label="Default status example" />
-                <p className="ml-2">Loading forecast data...</p>
-              </div>
-            ) : (
-              <div>
-                {Object.keys(forecastData).map((day, index) => (
-                  <div key={index}>
-                    <h2>Day {index + 1}</h2>
-                    <p>Smog Percentage: {forecastData[day].smog_percentage}</p>
-                    <p>Wind Direction: {forecastData[day].wind_direction}</p>
-                    <p>Wind Speed: {forecastData[day].wind_speed}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+            <div>
+              {loading ? (
+                <div className="flex justify-center items-center h-20">
+                  <Spinner aria-label="Default status example" />
+                  <p className="ml-2">Loading forecast data...</p>
+                </div>
+              ) : (
+                <div className="flex flex-wrap mx-auto w-full justify-around gap-4">
+                  {" "}
+                  {Object.keys(forecastData).map((day, index) => (
+                    <Card
+                      key={index}
+                      className="bg-slate-200 mx-auto flex items-center text-center drop-shadow-xl"
+                    >
+                      <h2 className="font-semibold dark:text-white">
+                        Day {index + 1}
+                      </h2>
+                      <p className="font-semibold">Smog Percentage</p>
+                      <div
+                        style={{ width: 90, height: 90, alignSelf: "center" }}
+                      >
+                        <CircularProgressbar
+                          value={
+                            forecastData[day].smog_percentage.toFixed(2) * 100
+                          }
+                          text={` ${
+                            forecastData[day].smog_percentage.toFixed(2) * 100
+                          }%`}
+                        />
+                      </div>
+                      <p className="font-semibold">
+                        Wind Direction:{" "}
+                        {getWindDirection(forecastData[day].wind_direction)}
+                      </p>
+                      <p className="font-semibold">
+                        Wind Speed:{" "}
+                        {(forecastData[day].wind_speed * 3.6).toFixed(2)} km/h
+                      </p>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
+          </Card>
         </div>
       </div>
       <CallToAction />
