@@ -200,7 +200,11 @@ export default function Predictions() {
                       className="bg-slate-200 mx-auto flex items-center text-center drop-shadow-xl"
                     >
                       <h2 className="font-semibold dark:text-white">
-                        Day {index + 1}
+                      {new Date(new Date().setDate(new Date().getDate() + index + 1)).toLocaleDateString('en-US', {
+                          month: '2-digit',
+                          day: '2-digit',
+                          year: 'numeric'
+                        })}
                       </h2>
                       <p className="font-semibold">Smog Percentage</p>
                       <div
