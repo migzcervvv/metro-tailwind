@@ -206,7 +206,7 @@ export default function MonitoringPage() {
             </div>
           </Card>
         )}
-        <div className="flex flex-col sm:flex-row justify-evenly">
+        <div className="flex flex-col sm:flex-row justify-evenly w-full">
           <div className="flex flex-col w-11/12 sm:w-2/5 pl-3 justify-center">
             {" "}
             <h3 className="font-bold pt-5 sm:pt-0 text-xl sm:text-3xl mb-3">
@@ -227,9 +227,9 @@ export default function MonitoringPage() {
               Loading Pollutants Data...
             </div>
           ) : (
-            <div className="text-center p-5">
+            <div className="text-center overflow-y-scroll">
               <div className="flex flex-col items-center">
-                <Table hoverable={true}>
+                <Table hoverable={true} className="m-5">
                   <Table.Head>
                     <Table.HeadCell>Pollutant</Table.HeadCell>
                     <Table.HeadCell>Air Quality Index (AQI)</Table.HeadCell>
@@ -253,7 +253,7 @@ export default function MonitoringPage() {
                       return (
                         <Table.Row
                           key={key}
-                          className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                          className="bg-white dark:border-gray-700 dark:bg-gray-800 overflow-y-scroll"
                         >
                           <Table.Cell className="text-lime-950 dark:text-lime-50">
                             {key}
