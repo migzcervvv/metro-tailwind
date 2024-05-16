@@ -67,6 +67,33 @@ export default function Predictions() {
     fetchData();
   }, []);
 
+  const getColor = (value) => {
+    if (value >= 0 && value <= 25) {
+      return "#00FF00"; // green
+    } else if (value >= 26 && value <= 50) {
+      return "#FFFF00"; // yellow
+    } else if (value >= 51 && value <= 75) {
+      return "#800080"; // purple
+    } else if (value >= 76 && value <= 100) {
+      return "#FF0000"; // red
+    }
+  };
+
+  const CircularProgressBarWithColor = ({ value }) => {
+    const color = getColor(value);
+
+    return (
+      <CircularProgressbar
+        value={value}
+        text={`${Math.round(value)}%`}
+        styles={{
+          path: { stroke: color },
+          text: { fill: "light blue" },
+        }}
+      />
+    );
+  };
+
   return (
     <>
       <div className="min-h-screen">
@@ -193,40 +220,33 @@ export default function Predictions() {
                 </div>
               ) : (
                 <div className="flex flex-wrap mx-auto w-full justify-around gap-4">
-                  {" "}
                   {Object.keys(forecastData).map((day, index) => (
                     <Card
                       key={index}
                       className="bg-slate-200 mx-auto flex items-center text-center drop-shadow-xl"
                     >
                       <h2 className="font-semibold dark:text-white">
-                      {new Date(new Date().setDate(new Date().getDate() + index + 1)).toLocaleDateString('en-US', {
-                          month: '2-digit',
-                          day: '2-digit',
-                          year: 'numeric'
+                        {new Date(
+                          new Date().setDate(new Date().getDate() + index + 1)
+                        ).toLocaleDateString("en-US", {
+                          month: "2-digit",
+                          day: "2-digit",
+                          year: "numeric",
                         })}
                       </h2>
                       <p className="font-semibold">Smog Percentage</p>
                       <div
                         style={{ width: 90, height: 90, alignSelf: "center" }}
                       >
-                        <CircularProgressbar
+                        <CircularProgressBarWithColor
                           value={
                             forecastData[day].smog_percentage.toFixed(2) * 100
                           }
-                          text={` ${
+                          text={` ${Math.round(
                             forecastData[day].smog_percentage.toFixed(2) * 100
-                          }%`}
+                          )}%`}
                         />
                       </div>
-                      <p className="font-semibold">
-                        Wind Direction:{" "}
-                        {getWindDirection(forecastData[day].wind_direction)}
-                      </p>
-                      <p className="font-semibold">
-                        Wind Speed:{" "}
-                        {(forecastData[day].wind_speed * 3.6).toFixed(2)} km/h
-                      </p>
                     </Card>
                   ))}
                 </div>
